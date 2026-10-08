@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>My Interest</title>
+  <style>
+    body {
+      font-family: "Helvetica Neue", Arial, sans-serif;
+      background-color: #f9f9f9;
+      margin: 0;
+      padding: 0;
+      color: #333;
+    }
+
+    header {
+      background-color: #f0f0f0;
+      color: #333;
+      text-align: center;
+      padding: 60px 20px 20px;
+      font-size: 22px;
+      font-weight: 300;
+      font-family: 'Arial', sans-serif;
+    }
+
+    header h1 {
+      margin: 0;
+    }
+
+    section {
+      max-width: 1100px;
+      margin: 40px auto;
+      padding: 0 20px;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 30px;
+    }
+
+    .interest-card {
+      background-color: #ffffff;
+      border-radius: 12px;
+      padding: 20px;
+      box-shadow: 0 6px 12px rgba(0, 0, 0, 0.05);
+      transition: all 0.3s ease;
+    }
+
+    .interest-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 10px 18px rgba(0, 0, 0, 0.1);
+    }
+
+    .title {
+      font-size: 22px;
+      font-weight: 600;
+      color: #2980b9;
+      margin-bottom: 12px;
+    }
+
+    .description {
+      font-size: 16px;
+      color: #555;
+      line-height: 1.6;
+    }
+
+    a {
+      color: #2980b9;
+      text-decoration: none;
+    }
+
+    a:hover {
+      text-decoration: underline;
+      color: #1abc9c;
+    }
+
+    @media (max-width: 768px) {
+      header h1 {
+        font-size: 36px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <h1>My interest</h1>
+  </header>
+
+  <section>
+    <div class="grid">
+
+      <!-- 推理和侦探作品 -->
+      <div class="interest-card">
+        <div class="title">Detective Fiction</div>
+        <div class="description">
+            I'm really into classic detective fiction, mystery films and shows,<br>
+            especially those with a Japanese style.<br>
+            I love stories that involve locked-room mysteries,
+            architectural tricks, or eerie family secrets.<br>
+            I'm also a fan of TV series like <em>Agatha Christie's Poirot</em> and <em>Agatha Christie's Marple</em>,
+            as well as manga and anime like <em>The Kindaichi Case Files</em> and <em>Detective School Q</em>.
+        </div>
+      </div>
+
+      <!-- 收集可动玩偶 -->
+      <div class="interest-card">
+        <div class="title">Action Figures</div>
+        <div class="description">
+          I'm really into collecting 6-inch action figures of my favorite anime characters 
+          — mostly from series like Dragon Ball, Ultraman and other tokusatsu shows (mainly the <a href="https://www.shfiguarts.com/" target="_blank">S.H.Figuarts</a> line by Bandai),<br>
+as well as EVA and JoJo's Bizarre Adventure.
+        </div>
+      </div>
+
+      <!-- 集换式卡牌游戏 -->
+      <div class="interest-card">
+        <div class="title">Trading Card Game</div>
+        <div class="description">
+          I highly recommend the Digimon Trading Card Game (
+<a href="https://www.digimoncard.cn/actlist?id=4" target="_blank">DTCG</a>)!<br>
+It features excellent game mechanics, great interactivity and gameplay feel, and beautifully illustrated card art.
+        </div>
+      </div>
+
+      <!-- 骑行 -->
+      <div class="interest-card">
+        <div class="title">Cycling</div>
+        <div class="description">
+          Although I'm new to cycling, it really feels amazing — it's such a great way to relax and clear my mind.<br>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+</body>
+</html>

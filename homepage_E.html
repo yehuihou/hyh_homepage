@@ -1,0 +1,1926 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Yehui Hou's academic homepage. Research interests include black hole imaging and polarization, black hole jets, spacetime perturbations, and gravitational lensing of gravitational waves.">
+  <meta name="theme-color" content="#f5f3eb">
+  <meta name="color-scheme" content="light">
+  <title>Yehui Hou | Academic Homepage</title>
+
+  <style>
+    :root {
+      --paper: #f5f3eb;
+      --ink: #1d342d;
+      --body: #49584f;
+      --muted: #68746c;
+      --accent: #925c3b;
+      --line: #d4d9cd;
+      --serif: "Noto Serif CJK SC", "Source Han Serif SC",
+               "Songti SC", "STSong", "SimSun", Georgia, serif;
+      --sans: "PingFang SC", "Microsoft YaHei",
+              "Noto Sans CJK SC", Arial, sans-serif;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      margin: 0;
+      color: var(--ink);
+      background: var(--paper);
+      font-family: var(--sans);
+      -webkit-font-smoothing: antialiased;
+      overflow-wrap: break-word;
+    }
+
+    ::selection { background: #e3cfb5; color: var(--ink); }
+    a { color: inherit; }
+    button { font: inherit; }
+
+    a:focus-visible,
+    button:focus-visible {
+      outline: 2px solid var(--accent);
+      outline-offset: 5px;
+      border-radius: 5px;
+    }
+
+    .container {
+      width: min(1040px, calc(100% - 48px));
+      margin-inline: auto;
+    }
+
+    /* Keep the background separate from the content; do not rotate the entire page. */
+    .cosmic-background {
+      position: fixed;
+      inset: 0;
+      z-index: 0;
+      overflow: hidden;
+      pointer-events: none;
+      background:
+        radial-gradient(
+          ellipse at 76% 30%,
+          rgba(182,134,83,.13),
+          transparent 38%
+        ),
+        radial-gradient(
+          ellipse at 10% 92%,
+          rgba(78,112,99,.08),
+          transparent 40%
+        ),
+        var(--paper);
+    }
+
+    .cosmic-background svg,
+    .cosmic-background canvas {
+      position: absolute;
+      inset: 0;
+      display: block;
+      width: 100%;
+      height: 100%;
+      transform: none;
+      opacity: 1;
+    }
+
+    .background-stars {
+      position: absolute;
+      inset: 0;
+      opacity: .25;
+      background-image:
+        radial-gradient(circle, #536b5f 1px, transparent 1.5px),
+        radial-gradient(circle, #a17651 .8px, transparent 1.3px);
+      background-size: 127px 139px, 191px 173px;
+      background-position: 15px 30px, 73px 91px;
+      animation: star-breathe 6s ease-in-out infinite alternate;
+    }
+
+    @keyframes star-breathe {
+      from { opacity: .15; }
+      to { opacity: .42; }
+    }
+
+    .page-shell {
+      position: relative;
+      z-index: 1;
+    }
+
+    .page-shell[inert] {
+      pointer-events: none;
+      user-select: none;
+    }
+
+    .skip-link {
+      position: fixed;
+      top: 12px;
+      left: 16px;
+      z-index: 50;
+      padding: 10px 15px;
+      background: var(--ink);
+      color: var(--paper);
+      transform: translateY(-180%);
+    }
+
+    .skip-link:focus { transform: translateY(0); }
+
+    .site-header {
+      border-bottom: 1px solid var(--line);
+      background: rgba(245,243,235,.85);
+    }
+
+    .header-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      min-height: 80px;
+      gap: 24px;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 13px;
+    }
+
+    .black-hole-button {
+      position: relative;
+      display: grid;
+      place-items: center;
+      flex-shrink: 0;
+      width: 44px;
+      height: 44px;
+      padding: 0;
+      border: 1px solid #d4c6b5;
+      border-radius: 50%;
+      color: var(--accent);
+      background: rgba(255,253,247,.85);
+      cursor: pointer;
+      box-shadow: 0 0 18px rgba(180,126,64,.16);
+      transition: background 180ms ease, border-color 180ms ease;
+    }
+
+    .black-hole-button::before {
+      content: "";
+      position: absolute;
+      inset: -5px;
+      border-radius: 50%;
+      background: conic-gradient(
+        transparent 0deg,
+        rgba(193,140,73,.2) 70deg,
+        rgba(193,140,73,.95) 140deg,
+        transparent 185deg,
+        rgba(193,140,73,.15) 250deg,
+        rgba(193,140,73,.8) 320deg,
+        transparent 360deg
+      );
+      -webkit-mask: radial-gradient(circle, transparent 62%, #000 65%);
+      mask: radial-gradient(circle, transparent 62%, #000 65%);
+      animation: hole-ring-spin 5s linear infinite;
+      pointer-events: none;
+    }
+
+    @keyframes hole-ring-spin {
+      to { transform: rotate(360deg); }
+    }
+
+    .black-hole-button:hover {
+      background: #eee2d2;
+      border-color: #ad8662;
+    }
+
+    .black-hole-button svg {
+      position: relative;
+      width: 36px;
+      height: 30px;
+    }
+
+    .site-name {
+      font-family: var(--serif);
+      font-size: 22px;
+      font-weight: 700;
+      letter-spacing: .08em;
+      text-decoration: none;
+    }
+
+    .nav {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 4px;
+      font-size: 14px;
+      font-weight: 500;
+    }
+
+    .nav a {
+      display: inline-flex;
+      align-items: center;
+      min-height: 44px;
+      padding: 8px 13px;
+      border-radius: 999px;
+      color: var(--muted);
+      text-decoration: none;
+      transition: color 180ms ease, background 180ms ease;
+    }
+
+    .nav a:hover,
+    .nav a[aria-current="page"] {
+      color: var(--accent);
+      background: rgba(146,92,59,.09);
+    }
+
+    .nav a[aria-current="page"] { font-weight: 700; }
+
+    .nav .language {
+      margin-left: 8px;
+      padding-left: 18px;
+      border-left: 1px solid var(--line);
+      border-radius: 0;
+      font-size: 12px;
+    }
+
+    .hero {
+      border-bottom: 1px solid var(--line);
+      padding: clamp(58px, 7vw, 92px) 0;
+      background: linear-gradient(
+        90deg,
+        rgba(245,243,235,.78),
+        rgba(245,243,235,.32) 58%,
+        rgba(245,243,235,.02)
+      );
+    }
+
+    .hero-inner {
+      display: grid;
+      grid-template-columns: minmax(0,1fr) 220px;
+      align-items: center;
+      gap: 65px;
+      max-width: 910px;
+    }
+
+    .eyebrow {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin: 0 0 22px;
+      color: var(--accent);
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: .19em;
+    }
+
+    .eyebrow::before {
+      content: "";
+      width: 28px;
+      height: 2px;
+      background: var(--accent);
+    }
+
+    h1 {
+      margin: 0;
+      font-family: var(--serif);
+      font-size: clamp(48px,6vw,72px);
+      font-weight: 700;
+      letter-spacing: .10em;
+      line-height: 1.2;
+      color: #18332a;
+    }
+
+    .hero-role {
+      display: flex;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 9px 14px;
+      margin: 23px 0 0;
+    }
+
+    .hero-institution {
+      font-size: 18px;
+      font-weight: 700;
+      letter-spacing: .04em;
+      text-decoration: none;
+    }
+
+    .hero-institution:hover { color: var(--accent); }
+
+    .hero-position {
+      padding: 5px 10px;
+      border: 1px solid #cdbba4;
+      border-radius: 4px;
+      background: rgba(236,225,207,.45);
+      color: #795539;
+      font-size: 12px;
+    }
+
+    .hero-description {
+      margin: 27px 0 0;
+      padding-left: 17px;
+      border-left: 2px solid #ab8260;
+      color: var(--body);
+      font-family: var(--serif);
+      font-size: 19px;
+      line-height: 1.95;
+      text-wrap: pretty;
+    }
+
+    .hero-description strong {
+      color: #203d31;
+      font-weight: 700;
+    }
+
+    .hero-links {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 29px;
+    }
+
+    .hero-links a {
+      display: inline-flex;
+      align-items: center;
+      gap: 14px;
+      min-height: 44px;
+      padding: 9px 16px;
+      border: 1px solid #cdd3c7;
+      border-radius: 999px;
+      background: rgba(255,253,247,.75);
+      font-size: 13px;
+      font-weight: 500;
+      text-decoration: none;
+      transition: background 180ms ease, color 180ms ease;
+    }
+
+    .hero-links a:first-child {
+      color: #fffaf0;
+      background: var(--ink);
+      border-color: var(--ink);
+    }
+
+    .hero-links a:hover {
+      background: #e8dbc7;
+      color: var(--ink);
+    }
+
+    .portrait {
+      position: relative;
+      margin: 0;
+      padding: 8px;
+      border: 1px solid #c4ccbd;
+      background: var(--paper);
+      box-shadow: 0 18px 42px rgba(36,56,49,.09);
+    }
+
+    .portrait::before,
+    .portrait::after {
+      content: "";
+      position: absolute;
+      width: 28px;
+      height: 28px;
+      border: solid #af8660;
+    }
+
+    .portrait::before {
+      top: -7px;
+      left: -7px;
+      border-width: 1px 0 0 1px;
+    }
+
+    .portrait::after {
+      bottom: -7px;
+      right: -7px;
+      border-width: 0 1px 1px 0;
+    }
+
+    .portrait img {
+      display: block;
+      width: 100%;
+      height: auto;
+      background: #e3e4dc;
+    }
+
+    .main-content {
+      width: min(880px,calc(100% - 48px));
+      margin-inline: auto;
+      padding: 17px 0 56px;
+    }
+
+    .content-section {
+      display: grid;
+      grid-template-columns: 144px minmax(0,1fr);
+      gap: 36px;
+      padding: 42px 0;
+    }
+
+    .content-section + .content-section {
+      border-top: 1px solid var(--line);
+    }
+
+    .section-title {
+      align-self: start;
+      margin: 0;
+      color: #203a2f;
+      font-size: 22px;
+      font-weight: 750;
+      line-height: 1.5;
+      letter-spacing: .035em;
+    }
+
+    .section-index {
+      display: block;
+      margin-bottom: 10px;
+      color: var(--accent);
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: .2em;
+    }
+
+    .section-title::after {
+      content: "";
+      display: block;
+      width: 27px;
+      height: 2px;
+      margin-top: 16px;
+      background: #a77950;
+    }
+
+    .section-body {
+      min-width: 0;
+      padding: 2px 0;
+    }
+
+    .section-body p {
+      margin: 0;
+      color: var(--body);
+      font-family: var(--serif);
+      font-size: 17px;
+      line-height: 2;
+      text-wrap: pretty;
+    }
+
+    .bio-list {
+      display: grid;
+      gap: 12px;
+      margin: 0;
+      padding: 0;
+      list-style: none;
+      color: var(--body);
+      font-family: var(--serif);
+      font-size: 17px;
+      line-height: 2;
+      text-wrap: pretty;
+    }
+
+    .bio-list li {
+      display: grid;
+      grid-template-columns: 3em minmax(0,1fr);
+      gap: 8px;
+    }
+
+    .bio-label {
+      color: #263f32;
+      font-weight: 700;
+      white-space: nowrap;
+    }
+
+    .text-link {
+      text-decoration-color: #b58a62;
+      text-underline-offset: 5px;
+      text-decoration-thickness: 1px;
+    }
+
+    .text-link:hover { color: var(--accent); }
+
+    .institution-link {
+      color: #263f32;
+      font-weight: 700;
+    }
+
+    .research-list {
+      display: grid;
+      grid-template-columns: repeat(2,minmax(0,1fr));
+      gap: 0 26px;
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }
+
+    .research-list li {
+      display: grid;
+      grid-template-columns: 24px minmax(0,1fr);
+      gap: 11px;
+      padding: 20px 0;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .research-list li:nth-child(-n+2) {
+      border-top: 1px solid var(--line);
+    }
+
+    .topic-number {
+      padding-top: 5px;
+      color: var(--accent);
+      font-size: 11px;
+      font-variant-numeric: tabular-nums;
+    }
+
+    .topic-title {
+      margin: 0;
+      color: #253e32;
+      font-size: 16px;
+      font-weight: 700;
+      line-height: 1.7;
+    }
+
+    .topic-detail {
+      display: block;
+      margin-top: 7px;
+      color: #73776b;
+      font-size: 12px;
+      line-height: 1.8;
+    }
+
+    .section-body .section-action {
+      margin-top: 23px;
+      color: var(--accent);
+      font-family: var(--sans);
+      font-size: 13px;
+      font-weight: 600;
+    }
+
+    .contact-card {
+      padding: 19px 22px;
+      border: 1px solid #d0d5c8;
+      border-left: 3px solid #a67b52;
+      border-radius: 4px;
+      background: rgba(255,253,247,.74);
+    }
+
+    .contact-label {
+      display: block;
+      margin-bottom: 9px;
+      color: var(--accent);
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: .1em;
+    }
+
+    .contact-email {
+      font-size: clamp(16px,2vw,20px);
+      font-weight: 500;
+      overflow-wrap: anywhere;
+    }
+
+    .site-footer {
+      border-top: 1px solid var(--line);
+      background: rgba(245,243,235,.75);
+    }
+
+    .footer-inner {
+      display: flex;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 12px;
+      padding-block: 25px;
+      color: var(--muted);
+      font-size: 12px;
+    }
+
+    .footer-inner p { margin: 0; }
+
+    .link-hole {
+      position: fixed;
+      z-index: 100;
+      width: 160px;
+      height: 130px;
+      transform: translate(-50%,-50%);
+      pointer-events: none;
+    }
+
+    .link-hole canvas {
+      display: block;
+      width: 100%;
+      height: 100%;
+    }
+
+    .absorption-stage {
+      position: fixed;
+      inset: 0;
+      z-index: 80;
+      display: none;
+      pointer-events: none;
+    }
+
+    .absorption-stage.is-active { display: block; }
+
+    .absorption-stage canvas {
+      display: block;
+      width: 100%;
+      height: 100%;
+    }
+
+    .absorption-status {
+      position: absolute;
+      bottom: 8%;
+      left: 50%;
+      transform: translateX(-50%);
+      margin: 0;
+      color: #765336;
+      font-size: 12px;
+      letter-spacing: .12em;
+      white-space: nowrap;
+    }
+
+    .sr-only {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      padding: 0;
+      margin: -1px;
+      overflow: hidden;
+      clip-path: inset(50%);
+      white-space: nowrap;
+      border: 0;
+    }
+
+    @media (max-width:760px) {
+      .header-inner {
+        align-items: flex-start;
+        flex-direction: column;
+        gap: 8px;
+        padding-block: 14px;
+      }
+
+      .hero-inner {
+        grid-template-columns: minmax(0,1fr) 170px;
+        gap: 30px;
+      }
+
+      .content-section {
+        grid-template-columns: 120px minmax(0,1fr);
+        gap: 26px;
+      }
+    }
+
+    @media (max-width:620px) {
+      .container,
+      .main-content { width: calc(100% - 36px); }
+
+      .nav { gap: 2px; font-size: 13px; }
+      .nav a { padding: 7px 9px; }
+      .nav .language { margin-left: 2px; padding-left: 10px; }
+
+      .hero { padding: 44px 0 48px; }
+
+      .hero-inner {
+        grid-template-columns: minmax(0,1fr) 108px;
+        gap: 19px;
+        align-items: start;
+      }
+
+      .eyebrow {
+        gap: 8px;
+        font-size: 10px;
+        letter-spacing: .06em;
+      }
+
+      .eyebrow::before { width: 16px; }
+
+      h1 {
+        font-size: clamp(35px,9vw,50px);
+        letter-spacing: .06em;
+      }
+
+      .hero-institution { font-size: 15px; }
+      .hero-position { font-size: 11px; }
+      .hero-description { padding-left: 12px; font-size: 16px; }
+      .hero-links { gap: 8px; }
+      .hero-links a { padding: 8px 11px; gap: 8px; font-size: 12px; }
+      .portrait { margin-top: 12px; padding: 5px; }
+
+      .content-section {
+        grid-template-columns: 1fr;
+        gap: 22px;
+        padding: 30px 0;
+      }
+
+      .section-title {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        font-size: 21px;
+      }
+
+      .section-index { margin: 0; }
+
+      .section-title::after {
+        margin: 0 0 0 3px;
+        width: 30px;
+        height: 1px;
+      }
+
+      .section-body p,
+      .bio-list { font-size: 16px; }
+
+      .research-list { grid-template-columns: 1fr; }
+      .research-list li:nth-child(2) { border-top: 0; }
+    }
+
+    @media (max-width:380px) {
+      .hero-inner { grid-template-columns: 1fr; }
+      .portrait { width: 128px; }
+    }
+
+    @media (prefers-reduced-motion:reduce) {
+      html { scroll-behavior: auto; }
+
+      *, *::before, *::after {
+        animation: none !important;
+        transition: none !important;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="cosmic-background" aria-hidden="true">
+    <div class="background-stars"></div>
+
+    <!--
+      Static fallback background:
+      These nodes are replaced once JavaScript renders the background successfully.
+      The jets run from upper right to lower left, with the center left unfilled.
+    -->
+    <svg id="background-svg"
+         viewBox="0 0 1440 1000"
+         preserveAspectRatio="xMidYMid slice"
+         focusable="false">
+      <g transform="translate(1100 300) rotate(45)"
+         fill="none"
+         stroke-linecap="round">
+        <g stroke="#74856f" stroke-opacity=".40" stroke-width="1.2">
+          <path d="M-10 -55 Q-85 -320 -125 -1000"/>
+          <path d="M10 -55 Q85 -320 125 -1000"/>
+          <path d="M-10 55 Q-85 320 -125 1000"/>
+          <path d="M10 55 Q85 320 125 1000"/>
+        </g>
+
+        <g stroke="#a67c50" stroke-opacity=".40" stroke-width="1">
+          <path d="M0 -60
+                   C-35 -95 45 -120 0 -160
+                   S-65 -215 0 -250
+                   S90 -315 0 -360
+                   S-115 -435 0 -500"/>
+          <path d="M0 60
+                   C35 95 -45 120 0 160
+                   S65 215 0 250
+                   S-90 315 0 360
+                   S115 435 0 500"/>
+          <ellipse rx="250" ry="88"/>
+          <ellipse rx="205" ry="72"/>
+          <ellipse rx="160" ry="56"/>
+          <ellipse rx="115" ry="40"/>
+        </g>
+
+        <circle r="49" fill="#f5f3eb"
+                stroke="#73806b" stroke-opacity=".55"/>
+
+        <g stroke="#73806b" stroke-opacity=".30" stroke-width=".8">
+          <path d="M-35 -28 Q0 -8 44 -12"/>
+          <path d="M-44 -14 Q0 6 48 2"/>
+          <path d="M-48 0 Q0 20 44 16"/>
+          <path d="M-43 14 Q0 34 33 30"/>
+        </g>
+      </g>
+    </svg>
+
+    <canvas id="background-canvas"></canvas>
+  </div>
+
+  <div class="page-shell" id="page-shell">
+    <a class="skip-link" href="#main-content">Skip to main content</a>
+
+    <header class="site-header">
+      <div class="header-inner container">
+        <div class="brand">
+          <button class="black-hole-button"
+                  id="black-hole-button"
+                  type="button"
+                  aria-label="Play the black hole accretion animation; the page returns after 5 seconds"
+                  title="Click to experience black hole accretion">
+            <svg viewBox="0 0 60 44" aria-hidden="true" focusable="false">
+              <g transform="rotate(-18 30 22)">
+                <ellipse cx="30" cy="22" rx="25" ry="7"
+                         fill="none" stroke="currentColor" stroke-width="1.5"/>
+                <circle cx="30" cy="22" r="10"
+                        fill="#172b23" stroke="#cfaa76" stroke-width="1"/>
+                <path d="M5 22 C8 32 52 32 55 22"
+                      fill="none" stroke="#b78652" stroke-width="2"/>
+                <path d="M20 20 C20 6 40 6 40 20"
+                      fill="none" stroke="#b78652" stroke-width="1"/>
+              </g>
+            </svg>
+          </button>
+
+          <a class="site-name" href="homepage_E.html">Yehui Hou Near a Black Hole</a>
+        </div>
+
+        <nav class="nav" aria-label="Main navigation">
+          <a href="homepage_E.html" aria-current="page">Home</a>
+          <a href="research_E.html">Research</a>
+          <a href="CV_English.pdf"
+             target="_blank"
+             rel="noopener noreferrer"
+             aria-label="View CV in English (PDF, opens in a new tab)">CV</a>
+          <a href="https://inspirehep.net/authors/2052049?ui-citation-summary=true"
+             target="_blank"
+             rel="noopener noreferrer">Publications</a>
+          <a href="interest_E.html">Beyond Research</a>
+          <a class="language"
+             href="homepage_E.html"
+             lang="en"
+             hreflang="en">中文</a>
+        </nav>
+      </div>
+    </header>
+
+    <main id="main-content">
+      <section class="hero" aria-labelledby="page-title">
+        <div class="hero-inner container">
+          <div>
+            <p class="eyebrow">Theoretical Astrophysics · Personal Homepage</p>
+            <h1 id="page-title">Yehui Hou</h1>
+
+            <p class="hero-role">
+              <a class="hero-institution"
+                 href="https://tdli.sjtu.edu.cn/"
+                 target="_blank"
+                 rel="noopener noreferrer">Tsung-Dao Lee Institute</a>
+              <span class="hero-position">Postdoctoral Researcher</span>
+            </p>
+
+            <p class="hero-description">
+              I study the physics around <strong><a class="text-link institution-link"
+                     href="https://en.wikipedia.org/wiki/Supermassive_black_hole"
+                     target="_blank"
+                     rel="noopener noreferrer">supermassive black holes</a></strong>, with a focus on black hole shadows and polarized images, accretion, jets and magnetic fields, strong gravitational lensing, and black hole perturbations.
+            </p>
+
+            <div class="hero-links">
+              <a href="research_E.html">
+                Research<span aria-hidden="true">→</span>
+              </a>
+              <a href="https://inspirehep.net/authors/2052049?ui-citation-summary=true"
+                 target="_blank"
+                 rel="noopener noreferrer">
+                Inspirehep<span aria-hidden="true">↗</span>
+              </a>
+              <a href="mailto:yehuihou@pku.edu.cn">
+                Contact Me<span aria-hidden="true">↗</span>
+              </a>
+            </div>
+          </div>
+
+          <figure class="portrait">
+            <img src="weiming.jpg"
+                 alt="Portrait of Yehui Hou"
+                 decoding="async"
+                 fetchpriority="high">
+          </figure>
+        </div>
+      </section>
+
+      <div class="main-content">
+        <section class="content-section" aria-labelledby="about-title">
+          <h2 class="section-title" id="about-title">
+            <span class="section-index" aria-hidden="true">01</span>
+            About
+          </h2>
+
+          <div class="section-body">
+            <ul class="bio-list">
+              <li>
+                <span class="bio-label">UG:</span>
+                <div>
+                  <a class="text-link institution-link"
+                     href="https://physics.buaa.edu.cn/"
+                     target="_blank"
+                     rel="noopener noreferrer">Beihang University</a>, Department of Applied Physics.
+                </div>
+              </li>
+              <li>
+                <span class="bio-label">PhD:</span>
+                <div>
+                  <a class="text-link institution-link"
+                     href="https://www.phy.pku.edu.cn/"
+                     target="_blank"
+                     rel="noopener noreferrer">School of Physics, Peking University</a>, Department of Theoretical Physics.
+                </div>
+              </li>
+              <li>
+                <span class="bio-label">PostD:</span>
+                <div>
+                  <a class="text-link institution-link"
+                     href="https://tdli.sjtu.edu.cn/"
+                     target="_blank"
+                     rel="noopener noreferrer">Tsung-Dao Lee Institute</a>, Astronomy Division, Tsung-Dao Lee Postdoctoral Fellow.
+                </div>
+              </li>
+            </ul>
+          </div>
+        </section>
+
+        <section class="content-section" aria-labelledby="research-title">
+          <h2 class="section-title" id="research-title">
+            <span class="section-index" aria-hidden="true">02</span>
+            Research Interests
+          </h2>
+
+          <div class="section-body">
+            <ol class="research-list">
+              <li>
+                <span class="topic-number" aria-hidden="true">01</span>
+                <div>
+                  <h3 class="topic-title">Black Hole Shadows and Polarized Images</h3>
+                  <span class="topic-detail">Black Hole Imaging · Polarization Structure</span>
+                </div>
+              </li>
+              <li>
+                <span class="topic-number" aria-hidden="true">02</span>
+                <div>
+                  <h3 class="topic-title">Modeling Black Hole Jets and Their Polarization</h3>
+                  <span class="topic-detail">Jet Models · Magnetic Fields and Polarization</span>
+                </div>
+              </li>
+              <li>
+                <span class="topic-number" aria-hidden="true">03</span>
+                <div>
+                  <h3 class="topic-title">Electromagnetic Probes of Black Hole Perturbations</h3>
+                  <span class="topic-detail">Spacetime Perturbations · Electromagnetic Observations</span>
+                </div>
+              </li>
+              <li>
+                <span class="topic-number" aria-hidden="true">04</span>
+                <div>
+                  <h3 class="topic-title">Strong Lensing of Gravitational Waves</h3>
+                  <span class="topic-detail">Gravitational Wave Propagation · Strong Gravitational Lensing</span>
+                </div>
+              </li>
+            </ol>
+
+            <p class="section-action">
+              <a class="text-link" href="research_E.html">
+                Explore my research
+                <span aria-hidden="true">→</span>
+              </a>
+            </p>
+          </div>
+        </section>
+
+        <section class="content-section" aria-labelledby="contact-title">
+          <h2 class="section-title" id="contact-title">
+            <span class="section-index" aria-hidden="true">03</span>
+            Contact
+          </h2>
+
+          <div class="section-body">
+            <div class="contact-card">
+              <span class="contact-label">Email</span>
+              <a class="text-link contact-email"
+                 href="mailto:yehuihou@pku.edu.cn">
+                yehuihou@pku.edu.cn
+              </a>
+            </div>
+          </div>
+        </section>
+      </div>
+    </main>
+
+    <footer class="site-footer">
+      <div class="footer-inner container">
+        <p>© Yehui Hou</p>
+        <p>Personal Homepage</p>
+      </div>
+    </footer>
+  </div>
+
+  <div class="absorption-stage"
+       id="absorption-stage"
+       aria-hidden="true">
+    <canvas id="large-hole-canvas"></canvas>
+    <p class="absorption-status" id="absorption-status">
+      Accretion in progress · Page returns in 5 seconds
+    </p>
+  </div>
+
+  <p class="sr-only"
+     id="live-status"
+     role="status"
+     aria-live="polite"></p>
+
+  <noscript>
+    <p style="position:relative;z-index:2;text-align:center">
+      JavaScript is disabled in your browser. A static background is displayed, and animated interactions are unavailable.
+    </p>
+  </noscript>
+
+  <script>
+    (() => {
+      "use strict";
+
+      const motion = window.matchMedia("(prefers-reduced-motion: reduce)");
+      const svg = document.getElementById("background-svg");
+      const bgCanvas = document.getElementById("background-canvas");
+      const shell = document.getElementById("page-shell");
+      const button = document.getElementById("black-hole-button");
+      const stage = document.getElementById("absorption-stage");
+      const largeCanvas = document.getElementById("large-hole-canvas");
+      const status = document.getElementById("absorption-status");
+      const live = document.getElementById("live-status");
+
+      const NS = "http://www.w3.org/2000/svg";
+      const TAU = Math.PI * 2;
+      const effects = new Set();
+
+      let geometry = null;
+      let bgCtx = null;
+      let bgFrame = 0;
+      let resizeFrame = 0;
+      let largeFrame = 0;
+      let restoreTimer = 0;
+      let navigationTimer = 0;
+      let absorbing = false;
+      let navigating = false;
+      let savedFocus = null;
+      let savedOverflow = "";
+      let savedX = 0;
+      let savedY = 0;
+
+      function setupCanvas(canvas, width, height) {
+        const ctx = canvas.getContext("2d");
+        if (!ctx) return null;
+
+        const dpr = Math.min(window.devicePixelRatio || 1, 2);
+        canvas.width = Math.round(width * dpr);
+        canvas.height = Math.round(height * dpr);
+        ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+        return ctx;
+      }
+
+      function node(tag, attrs, parent) {
+        const element = document.createElementNS(NS, tag);
+
+        for (const [key, value] of Object.entries(attrs)) {
+          element.setAttribute(key, String(value));
+        }
+
+        parent.appendChild(element);
+        return element;
+      }
+
+      function svgPath(points, color, opacity, width, parent) {
+        if (!points.length) return;
+
+        node("path", {
+          d: points.map((point, index) =>
+            `${index ? "L" : "M"}${point.x.toFixed(2)},${point.y.toFixed(2)}`
+          ).join(" "),
+          fill: "none",
+          stroke: color,
+          "stroke-opacity": opacity,
+          "stroke-width": width,
+          "stroke-linecap": "round",
+          "stroke-linejoin": "round"
+        }, parent);
+      }
+
+      /*
+       * The disk lies in the x-y plane; the jets follow the z axis.
+       * Rotate the background projection 90 degrees around its center.
+       * The bipolar jet axis runs from upper right to lower left,
+       * without rotating the content or portrait.
+       */
+      function project(x, y, z = 0) {
+        const g = geometry;
+        const v = y * .35 - z * .937;
+        const c = Math.SQRT1_2;
+        const dx = (x + v) * c;
+        const dy = (-x + v) * c;
+
+        return {
+          x: g.cx - dy,
+          y: g.cy + dx
+        };
+      }
+
+      function flowPoint(progress, phase) {
+        const g = geometry;
+        const radius = g.outer * Math.pow(g.r / g.outer, progress);
+        const angle = phase + progress * Math.PI * 2.6;
+
+        return {
+          ...project(
+            radius * Math.cos(angle),
+            radius * Math.sin(angle)
+          ),
+          front: Math.sin(angle) > 0
+        };
+      }
+
+      function jetPoint(progress, phase, side) {
+        const g = geometry;
+        const distance = progress * g.jetLength;
+        const radius = Math.sqrt(
+          Math.pow(g.r * .18, 2) + distance * 12 * g.scale
+        );
+        const angle = phase + progress * Math.PI * 11;
+
+        return project(
+          radius * Math.cos(angle),
+          radius * Math.sin(angle),
+          side * (g.r * 1.1 + distance)
+        );
+      }
+
+      function buildBackground() {
+        const width = window.innerWidth;
+        const height = window.innerHeight;
+        const scale = Math.min(1.2, Math.max(.55, width / 1300));
+
+        geometry = {
+          width,
+          height,
+          scale,
+          cx: width * (width < 620 ? .82 : .77),
+          cy: height * .30,
+          r: 49 * scale,
+          outer: 265 * scale,
+          jetLength: Math.hypot(width, height) * 1.1
+        };
+
+        const g = geometry;
+
+        /*
+         * Build the complete graphic in memory before replacing the static fallback.
+         * If generation fails, the existing static SVG remains intact.
+         */
+        const root = document.createElementNS(NS, "g");
+        const defs = node("defs", {}, root);
+        const clip = node("clipPath", {
+          id: "sphere-clip",
+          clipPathUnits: "userSpaceOnUse"
+        }, defs);
+
+        node("circle", {
+          cx: g.cx,
+          cy: g.cy,
+          r: g.r
+        }, clip);
+
+        // Parabolic, collimated jets and helical magnetic field lines.
+        for (const side of [-1, 1]) {
+          for (const sign of [-1, 1]) {
+            const points = [];
+
+            for (let i = 0; i <= 140; i++) {
+              const distance = i / 140 * g.jetLength;
+              const radius = Math.sqrt(
+                Math.pow(g.r * .18, 2) +
+                distance * 12 * scale
+              );
+
+              points.push(project(
+                sign * radius,
+                0,
+                side * (g.r * 1.1 + distance)
+              ));
+            }
+
+            svgPath(points, "#74856f", .42, 1.05, root);
+          }
+
+          const helix = [];
+
+          for (let i = 0; i <= 500; i++) {
+            helix.push(jetPoint(i / 500, .4, side));
+          }
+
+          svgPath(helix, "#a67c50", .42, .95, root);
+        }
+
+        const back = node("g", {}, root);
+        const sphere = node("g", {}, root);
+        const front = node("g", {}, root);
+
+        // Spiral streamlines that converge toward the center.
+        for (let arm = 0; arm < 15; arm++) {
+          let points = [];
+          let previousFront = null;
+
+          for (let i = 0; i <= 180; i++) {
+            const point = flowPoint(i / 180, arm * TAU / 15);
+
+            if (
+              previousFront !== null &&
+              point.front !== previousFront
+            ) {
+              points.push(point);
+
+              svgPath(
+                points,
+                "#a17a51",
+                previousFront ? .46 : .30,
+                .95,
+                previousFront ? front : back
+              );
+
+              points = [point];
+            } else {
+              points.push(point);
+            }
+
+            previousFront = point.front;
+          }
+
+          svgPath(
+            points,
+            "#a17a51",
+            previousFront ? .46 : .30,
+            .95,
+            previousFront ? front : back
+          );
+        }
+
+        // Keep the center unfilled, using contours and sketch-style hatching.
+        node("circle", {
+          cx: g.cx,
+          cy: g.cy,
+          r: g.r,
+          fill: "#f5f3eb",
+          stroke: "#73806b",
+          "stroke-opacity": .55,
+          "stroke-width": 1.1
+        }, sphere);
+
+        node("circle", {
+          cx: g.cx + .5,
+          cy: g.cy + .5,
+          r: g.r * 1.035,
+          fill: "none",
+          stroke: "#a17a51",
+          "stroke-opacity": .30,
+          "stroke-width": .7
+        }, sphere);
+
+        const hatch = node("g", {
+          "clip-path": "url(#sphere-clip)"
+        }, sphere);
+
+        for (let i = 0; i < 17; i++) {
+          const points = [];
+
+          for (let j = 0; j <= 50; j++) {
+            const x = (-1.1 + j / 50 * 2.2) * g.r;
+            const y =
+              (-.6 + i * .09) * g.r +
+              x * .34 +
+              .2 * g.r * (1 - (x / g.r) ** 2);
+
+            points.push({
+              x: g.cx - y,
+              y: g.cy + x
+            });
+          }
+
+          // The missing closing parenthesis and semicolon have been restored.
+          svgPath(
+            points,
+            "#6e7a65",
+            .15 + i * .007,
+            .7,
+            hatch
+          );
+        }
+
+        svg.setAttribute("viewBox", `0 0 ${width} ${height}`);
+        svg.setAttribute("preserveAspectRatio", "xMidYMid meet");
+
+        while (svg.firstChild) {
+          svg.removeChild(svg.firstChild);
+        }
+
+        svg.appendChild(root);
+
+        bgCtx = setupCanvas(bgCanvas, width, height);
+        drawBackground(performance.now());
+      }
+
+      function strokeCanvas(ctx, points, color, width = 1) {
+        if (!points.length) return;
+
+        ctx.beginPath();
+        ctx.moveTo(points[0].x, points[0].y);
+
+        for (let i = 1; i < points.length; i++) {
+          ctx.lineTo(points[i].x, points[i].y);
+        }
+
+        ctx.strokeStyle = color;
+        ctx.lineWidth = width;
+        ctx.stroke();
+      }
+
+      function drawBackground(now) {
+        if (!bgCtx || !geometry) return;
+
+        const ctx = bgCtx;
+        const g = geometry;
+        const time = motion.matches ? 0 : now;
+
+        ctx.clearRect(0, 0, g.width, g.height);
+
+        // Inflow particles use the same projection as the SVG spiral streamlines.
+        for (let i = 0; i < 65; i++) {
+          const progress = (time * .00010 + i / 65) % 1;
+          const phase = (i % 15) * TAU / 15;
+          const point = flowPoint(progress, phase);
+          const distance = Math.hypot(
+            point.x - g.cx,
+            point.y - g.cy
+          );
+
+          if (!point.front && distance < g.r + 1) continue;
+
+          const alpha = Math.sin(progress * Math.PI) * .65;
+          const tail = [];
+
+          for (let j = 0; j <= 8; j++) {
+            const p = flowPoint(
+              Math.max(0, progress - .045 + .045 * j / 8),
+              phase
+            );
+
+            if (
+              p.front ||
+              Math.hypot(p.x - g.cx, p.y - g.cy) > g.r
+            ) {
+              tail.push(p);
+            }
+          }
+
+          strokeCanvas(
+            ctx,
+            tail,
+            `rgba(162,105,48,${alpha * .6})`,
+            1
+          );
+
+          ctx.beginPath();
+          ctx.arc(point.x, point.y, 1.5 * g.scale, 0, TAU);
+          ctx.fillStyle = `rgba(151,91,39,${alpha})`;
+          ctx.fill();
+        }
+
+        // Jet particles move outward along the magnetic field lines.
+        for (const side of [-1, 1]) {
+          for (let i = 0; i < 26; i++) {
+            const progress = (time * .000065 + i / 26) % 1;
+            const point = jetPoint(progress, .4, side);
+            const alpha = Math.sin(progress * Math.PI) * .5;
+            const tail = [];
+
+            for (let j = 0; j <= 8; j++) {
+              tail.push(jetPoint(
+                Math.max(0, progress - .015 + .015 * j / 8),
+                .4,
+                side
+              ));
+            }
+
+            strokeCanvas(
+              ctx,
+              tail,
+              `rgba(111,133,107,${alpha})`,
+              1
+            );
+
+            ctx.beginPath();
+            ctx.arc(point.x, point.y, 1.35 * g.scale, 0, TAU);
+            ctx.fillStyle = `rgba(152,110,57,${alpha})`;
+            ctx.fill();
+          }
+        }
+      }
+
+      function backgroundTick(now) {
+        bgFrame = 0;
+        drawBackground(now);
+
+        if (!motion.matches && !document.hidden && bgCtx) {
+          bgFrame = requestAnimationFrame(backgroundTick);
+        }
+      }
+
+      function startBackground() {
+        cancelAnimationFrame(bgFrame);
+        bgFrame = 0;
+        drawBackground(performance.now());
+
+        if (!motion.matches && !document.hidden && bgCtx) {
+          bgFrame = requestAnimationFrame(backgroundTick);
+        }
+      }
+
+      // The interactive black hole is a visual illustration, not a numerical relativity simulation.
+      function drawHole(ctx, x, y, radius, time, count = 80) {
+        ctx.save();
+        ctx.translate(x, y);
+        ctx.rotate(-.28);
+
+        const glow = ctx.createRadialGradient(
+          0, 0, radius * .7,
+          0, 0, radius * 3.2
+        );
+
+        glow.addColorStop(0, "rgba(194,143,76,.35)");
+        glow.addColorStop(1, "rgba(194,143,76,0)");
+
+        ctx.fillStyle = glow;
+        ctx.beginPath();
+        ctx.arc(0, 0, radius * 3.2, 0, TAU);
+        ctx.fill();
+
+        function point(progress, phase) {
+          const r = radius * 3 * Math.pow(.27, progress);
+          const angle = phase + Math.PI *
+            (1.7 * progress + .8 * progress * progress);
+
+          return {
+            x: Math.cos(angle) * r,
+            y: Math.sin(angle) * r * .34,
+            front: Math.sin(angle) > 0
+          };
+        }
+
+        function disk(front) {
+          for (let arm = 0; arm < 14; arm++) {
+            ctx.beginPath();
+            let drawing = false;
+
+            for (let j = 0; j <= 100; j++) {
+              const p = point(j / 100, arm * TAU / 14);
+
+              if (p.front === front) {
+                if (drawing) {
+                  ctx.lineTo(p.x, p.y);
+                } else {
+                  ctx.moveTo(p.x, p.y);
+                }
+
+                drawing = true;
+              } else {
+                drawing = false;
+              }
+            }
+
+            ctx.strokeStyle = front
+              ? "rgba(199,140,66,.65)"
+              : "rgba(168,115,57,.35)";
+            ctx.lineWidth = Math.max(.7, radius * .013);
+            ctx.stroke();
+          }
+
+          for (let i = 0; i < count; i++) {
+            const progress = (time * .00030 + i / count) % 1;
+            const phase = i * 2.399963;
+            const p = point(progress, phase);
+
+            if (p.front !== front) continue;
+
+            const alpha = Math.sin(progress * Math.PI);
+            const tail = [];
+
+            for (let j = 0; j <= 10; j++) {
+              tail.push(point(
+                Math.max(0, progress - .06 + .06 * j / 10),
+                phase
+              ));
+            }
+
+            strokeCanvas(
+              ctx,
+              tail,
+              `rgba(230,175,94,${alpha * .7})`,
+              Math.max(.7, radius * .012)
+            );
+
+            ctx.beginPath();
+            ctx.arc(
+              p.x, p.y,
+              Math.max(1, radius * .014),
+              0, TAU
+            );
+            ctx.fillStyle = `rgba(255,224,173,${alpha})`;
+            ctx.fill();
+          }
+        }
+
+        disk(false);
+
+        ctx.beginPath();
+        ctx.ellipse(
+          0, -radius * .05,
+          radius * 1.12, radius * 1.2,
+          0, Math.PI, TAU
+        );
+        ctx.strokeStyle = "rgba(225,173,98,.75)";
+        ctx.lineWidth = Math.max(1, radius * .025);
+        ctx.stroke();
+
+        ctx.beginPath();
+        ctx.arc(0, 0, radius, 0, TAU);
+        ctx.fillStyle = "#111d18";
+        ctx.fill();
+
+        ctx.beginPath();
+        ctx.arc(0, 0, radius * 1.035, 0, TAU);
+        ctx.strokeStyle = "#d7ab70";
+        ctx.lineWidth = Math.max(1, radius * .03);
+        ctx.stroke();
+
+        disk(true);
+        ctx.restore();
+      }
+
+      function showLinkHole(x, y) {
+        if (motion.matches || absorbing) return;
+
+        const element = document.createElement("div");
+        element.className = "link-hole";
+        element.setAttribute("aria-hidden", "true");
+        element.style.left = `${x}px`;
+        element.style.top = `${y}px`;
+
+        const canvas = document.createElement("canvas");
+        element.appendChild(canvas);
+        document.body.appendChild(element);
+
+        const ctx = setupCanvas(canvas, 160, 130);
+
+        if (!ctx) {
+          element.remove();
+          return;
+        }
+
+        const effect = { element, frame: 0 };
+        effects.add(effect);
+
+        const start = performance.now();
+
+        function tick(now) {
+          const elapsed = now - start;
+
+          ctx.clearRect(0, 0, 160, 130);
+          ctx.save();
+          ctx.globalAlpha =
+            Math.min(1, elapsed / 90) *
+            Math.max(0, 1 - Math.max(0, elapsed - 450) / 300);
+
+          drawHole(ctx, 80, 65, 23, elapsed, 45);
+          ctx.restore();
+
+          if (elapsed < 750 && !document.hidden) {
+            effect.frame = requestAnimationFrame(tick);
+          } else {
+            element.remove();
+            effects.delete(effect);
+          }
+        }
+
+        effect.frame = requestAnimationFrame(tick);
+      }
+
+      function clearEffects() {
+        for (const effect of effects) {
+          cancelAnimationFrame(effect.frame);
+          effect.element.remove();
+        }
+
+        effects.clear();
+      }
+
+      function restorePage(announce = true) {
+        if (!absorbing) return;
+
+        clearTimeout(restoreTimer);
+        cancelAnimationFrame(largeFrame);
+
+        shell.style.transform = "";
+        shell.style.opacity = "";
+        shell.style.transformOrigin = "";
+        shell.style.willChange = "";
+        shell.inert = false;
+        shell.removeAttribute("inert");
+
+        document.body.style.overflow = savedOverflow;
+        stage.classList.remove("is-active");
+        status.hidden = false;
+        button.disabled = false;
+        absorbing = false;
+
+        const previousScroll =
+          document.documentElement.style.scrollBehavior;
+
+        document.documentElement.style.scrollBehavior = "auto";
+        window.scrollTo(savedX, savedY);
+        document.documentElement.style.scrollBehavior = previousScroll;
+
+        if (announce) {
+          live.textContent = "The page has been restored.";
+
+          if (
+            savedFocus instanceof HTMLElement &&
+            savedFocus.isConnected
+          ) {
+            savedFocus.focus({ preventScroll: true });
+          }
+        }
+      }
+
+      function startAbsorption() {
+        if (absorbing || navigating) return;
+
+        /*
+         * Check Canvas support before hiding the content.
+         */
+        let width = window.innerWidth;
+        let height = window.innerHeight;
+        let ctx = setupCanvas(largeCanvas, width, height);
+
+        if (!ctx) {
+          live.textContent = "Your browser does not support this animation.";
+          return;
+        }
+
+        absorbing = true;
+        savedFocus = document.activeElement;
+        savedOverflow = document.body.style.overflow;
+        savedX = window.scrollX;
+        savedY = window.scrollY;
+
+        clearEffects();
+
+        if (savedFocus instanceof HTMLElement) {
+          savedFocus.blur();
+        }
+
+        button.disabled = true;
+        shell.inert = true;
+        shell.setAttribute("inert", "");
+        document.body.style.overflow = "hidden";
+        stage.classList.add("is-active");
+        status.hidden = false;
+
+        live.textContent =
+          "The black hole accretion animation has started. The page returns after 5 seconds. Press Escape to exit early.";
+
+        function setAbsorptionOrigin() {
+          /*
+           * Use the untransformed page position to keep the rotation center
+           * aligned after scrolling.
+           */
+          const previousTransform = shell.style.transform;
+          shell.style.transform = "none";
+          const bounds = shell.getBoundingClientRect();
+
+          shell.style.transformOrigin =
+            `${width / 2 - bounds.left}px ` +
+            `${height / 2 - bounds.top}px`;
+
+          shell.style.transform = previousTransform;
+        }
+
+        setAbsorptionOrigin();
+        shell.style.willChange = "transform, opacity";
+
+        const start = performance.now();
+
+        // An independent timer restores the content after 5 seconds.
+        restoreTimer = setTimeout(() => restorePage(), 5000);
+
+        function tick(now) {
+          if (!absorbing) return;
+
+          const elapsed = now - start;
+          const progress = Math.min(1, elapsed / 2800);
+          const eased = progress * progress;
+
+          if (motion.matches) {
+            shell.style.opacity = "0";
+          } else {
+            const scale = Math.max(.015, 1 - eased);
+
+            shell.style.transform =
+              `rotate(${-115 * eased}deg) scale(${scale})`;
+
+            shell.style.opacity =
+              String(Math.max(0, 1 - Math.pow(progress, 2.6)));
+          }
+
+          if (
+            width !== window.innerWidth ||
+            height !== window.innerHeight
+          ) {
+            width = window.innerWidth;
+            height = window.innerHeight;
+            ctx = setupCanvas(largeCanvas, width, height);
+            setAbsorptionOrigin();
+          }
+
+          if (ctx) {
+            ctx.clearRect(0, 0, width, height);
+
+            const alpha = motion.matches
+              ? (elapsed < 3400 ? 1 : 0)
+              : Math.min(1, elapsed / 350) *
+                Math.max(
+                  0,
+                  1 - Math.max(0, elapsed - 2800) / 650
+                );
+
+            if (alpha > 0) {
+              ctx.save();
+              ctx.globalAlpha = alpha;
+
+              drawHole(
+                ctx,
+                width / 2,
+                height / 2,
+                Math.min(width * .14, height * .18, 150),
+                motion.matches ? 0 : elapsed,
+                motion.matches ? 0 : 130
+              );
+
+              ctx.restore();
+            }
+          }
+
+          status.hidden = elapsed >= 3400;
+
+          if (elapsed < 3500) {
+            largeFrame = requestAnimationFrame(tick);
+          }
+        }
+
+        largeFrame = requestAnimationFrame(tick);
+      }
+
+      button.addEventListener("click", startAbsorption);
+
+      document.addEventListener("keydown", event => {
+        if (event.key === "Escape" && absorbing) {
+          event.preventDefault();
+          restorePage();
+        }
+      });
+
+      /*
+       * Delay regular same-window navigation by 480 milliseconds.
+       * Preserve native behavior for new tabs, downloads, email links,
+       * and modifier-key clicks.
+       */
+      document.addEventListener("click", event => {
+        const link = event.target instanceof Element
+          ? event.target.closest("a[href]")
+          : null;
+
+        if (
+          !link ||
+          event.defaultPrevented ||
+          event.button !== 0 ||
+          event.metaKey ||
+          event.ctrlKey ||
+          event.shiftKey ||
+          event.altKey ||
+          link.hasAttribute("download")
+        ) {
+          return;
+        }
+
+        if (absorbing || navigating) {
+          event.preventDefault();
+          return;
+        }
+
+        if (motion.matches) return;
+
+        const rect = link.getBoundingClientRect();
+
+        showLinkHole(
+          event.detail === 0
+            ? rect.left + rect.width / 2
+            : event.clientX,
+          event.detail === 0
+            ? rect.top + rect.height / 2
+            : event.clientY
+        );
+
+        const base = document.querySelector("base[target]");
+        const target = (
+          link.getAttribute("target") ||
+          (base ? base.getAttribute("target") : "") ||
+          "_self"
+        ).toLowerCase();
+
+        const destination = new URL(link.href, location.href);
+        const current = new URL(location.href);
+
+        if (
+          target !== "_self" ||
+          !["http:", "https:", "file:"].includes(destination.protocol)
+        ) {
+          return;
+        }
+
+        const sameDocument =
+          destination.origin === current.origin &&
+          destination.pathname === current.pathname &&
+          destination.search === current.search;
+
+        if (sameDocument && link.href.includes("#")) return;
+
+        if (destination.href === current.href) {
+          event.preventDefault();
+          return;
+        }
+
+        event.preventDefault();
+        navigating = true;
+
+        navigationTimer = setTimeout(() => {
+          location.assign(destination.href);
+        }, 480);
+      });
+
+      function rebuildBackground() {
+        try {
+          buildBackground();
+          startBackground();
+        } catch (error) {
+          /*
+           * If graphic generation fails, retain the existing SVG.
+           * The page content remains visible.
+           */
+          console.error("Background rendering failed:", error);
+        }
+      }
+
+      window.addEventListener("resize", () => {
+        cancelAnimationFrame(resizeFrame);
+        resizeFrame = requestAnimationFrame(rebuildBackground);
+      }, { passive: true });
+
+      document.addEventListener("visibilitychange", () => {
+        if (document.hidden) {
+          cancelAnimationFrame(bgFrame);
+          bgFrame = 0;
+          clearEffects();
+
+          if (absorbing) restorePage(false);
+        } else {
+          startBackground();
+        }
+      });
+
+      window.addEventListener("pagehide", () => {
+        clearTimeout(navigationTimer);
+        navigating = false;
+        cancelAnimationFrame(bgFrame);
+        cancelAnimationFrame(resizeFrame);
+        clearEffects();
+        restorePage(false);
+      });
+
+      window.addEventListener("pageshow", () => {
+        clearTimeout(navigationTimer);
+        navigating = false;
+        clearEffects();
+        restorePage(false);
+        startBackground();
+      });
+
+      function motionChanged() {
+        clearEffects();
+        restorePage();
+        startBackground();
+      }
+
+      if (motion.addEventListener) {
+        motion.addEventListener("change", motionChanged);
+      } else if (motion.addListener) {
+        motion.addListener(motionChanged);
+      }
+
+      rebuildBackground();
+    })();
+  </script>
+</body>
+</html>
