@@ -1,0 +1,1642 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description"
+        content="Yehui Hou 关于黑洞偏振成像、时空扰动的电磁信号与引力波光学的研究。">
+  <title>研究 | Yehui Hou</title>
+
+  <style>
+    :root {
+      --paper: #f5f3eb;
+      --ink: #243831;
+      --muted: #64736b;
+      --accent: #97694d;
+      --line: #d6dcd2;
+      --reading-width: 680px;
+
+      --site-header-height: 82px;
+      --section-index-height: 66px;
+      --fixed-nav-height:
+        calc(var(--site-header-height) + var(--section-index-height));
+
+      --nav-surface: rgba(245, 243, 235, .96);
+      --nav-hover: rgba(151, 105, 77, .08);
+      --nav-active: rgba(151, 105, 77, .13);
+
+      --research-photo-default-width: 590px;
+
+      --figure-space: clamp(10px, 1.5vw, 16px);
+      --caption-space: clamp(5px, .7vw, 8px);
+      --image-row-gap: clamp(6px, 1vw, 12px);
+      --paragraph-space: clamp(12px, 1.8vw, 18px);
+      --page-gutter: 32px;
+    }
+
+    *,
+    *::before,
+    *::after {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+      padding-top: var(--fixed-nav-height);
+      background: var(--paper);
+      color: var(--ink);
+      font-family: Georgia, "Times New Roman", serif;
+      -webkit-font-smoothing: antialiased;
+      overflow-wrap: break-word;
+    }
+
+    /* 唯一的背景布局调整：星点固定覆盖整个视口。 */
+    .starfield {
+      position: fixed;
+      z-index: 0;
+      inset: 0;
+      display: block;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+    }
+
+    #main-content,
+    .site-footer {
+      position: relative;
+      z-index: 1;
+    }
+
+    img {
+      display: block;
+      max-width: 100%;
+      height: auto;
+    }
+
+    /* 修改：链接去除下划线，通过柔和发光提示交互。 */
+    a {
+      color: inherit;
+      text-decoration: none;
+      transition: text-shadow 180ms ease;
+    }
+
+    a:hover,
+    a:focus-visible {
+      text-shadow:
+        0 0 7px rgba(151, 105, 77, .30),
+        0 0 15px rgba(151, 105, 77, .16);
+    }
+
+    a:focus-visible {
+      outline: 2px solid var(--accent);
+      outline-offset: 4px;
+    }
+
+    .container {
+      width: min(calc(100% - 64px), 1140px);
+      margin-inline: auto;
+    }
+
+    .reading-column {
+      width: min(calc(100% - 48px), var(--reading-width));
+      margin-inline: auto;
+    }
+
+    .skip-link {
+      position: fixed;
+      z-index: 110;
+      top: -100px;
+      left: 16px;
+      padding: 12px 16px;
+      border-radius: 8px;
+      background: var(--ink);
+      color: var(--paper);
+    }
+
+    .skip-link:focus {
+      top: 12px;
+    }
+
+    .nav,
+    .eyebrow,
+    .index-label,
+    .section-index,
+    .section-number,
+    .topic-meta,
+    .paper-links,
+    figcaption,
+    .footer-inner,
+    .person-role {
+      font-family: Arial, Helvetica, sans-serif;
+    }
+
+    /* 原有页眉布局保持不变。 */
+    .site-header {
+      position: fixed;
+      z-index: 50;
+      inset: 0 0 auto;
+      background: var(--nav-surface);
+      border-bottom: 1px solid var(--line);
+      -webkit-backdrop-filter: blur(14px);
+      backdrop-filter: blur(14px);
+    }
+
+    .header-inner {
+      min-height: 82px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+    }
+
+    /* 修改：采用 homepage_C.html 的名称字体、字重和字距。 */
+    .site-name {
+      flex: none;
+      font-family: "Noto Serif CJK SC", "Source Han Serif SC",
+                   "Songti SC", "STSong", "SimSun", Georgia, serif;
+      font-size: 1.12rem;
+      font-weight: 700;
+      letter-spacing: .08em;
+      text-decoration: none;
+      white-space: nowrap;
+    }
+
+    /* 修改：导航采用 homepage_C.html 的无衬线字体组合。 */
+    .nav {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: flex-end;
+      gap: 6px;
+      font-family: "PingFang SC", "Microsoft YaHei",
+                   "Noto Sans CJK SC", Arial, sans-serif;
+      font-size: .98rem;
+      font-weight: 500;
+    }
+
+    .nav a,
+    .section-index a {
+      display: inline-flex;
+      align-items: center;
+      min-height: 40px;
+      padding: 9px 14px;
+      border-radius: 999px;
+      text-decoration: none;
+      white-space: nowrap;
+      transition:
+        color 180ms ease,
+        background-color 180ms ease,
+        text-shadow 180ms ease;
+    }
+
+    .nav a {
+      justify-content: center;
+    }
+
+    .nav a:hover,
+    .section-index a:hover,
+    .section-index a:focus-visible {
+      color: var(--accent);
+      background: var(--nav-hover);
+    }
+
+    .nav a[aria-current="page"] {
+      color: var(--accent);
+      background: var(--nav-active);
+    }
+
+    .nav .language {
+      margin-left: 6px;
+      padding-left: 16px;
+      border-left: 1px solid var(--line);
+      border-radius: 0;
+    }
+
+    /* 原有浏览栏布局保持不变。 */
+    .section-index {
+      position: fixed;
+      z-index: 49;
+      top: var(--site-header-height);
+      right: 0;
+      left: 0;
+      background: var(--nav-surface);
+      border-bottom: 1px solid var(--line);
+      box-shadow: 0 6px 20px rgba(36, 56, 49, .05);
+      -webkit-backdrop-filter: blur(14px);
+      backdrop-filter: blur(14px);
+    }
+
+    .index-inner {
+      width: min(calc(100% - 64px), 1140px);
+      min-height: 66px;
+      margin-inline: auto;
+      padding-block: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-wrap: nowrap;
+      gap: 8px;
+      overflow-x: auto;
+      overscroll-behavior-x: contain;
+      scrollbar-width: thin;
+      scrollbar-color: rgba(151, 105, 77, .3) transparent;
+    }
+
+    .index-label {
+      flex: 0 0 auto;
+      margin-right: 8px;
+      color: var(--accent);
+      font-size: .76rem;
+      font-weight: 600;
+      letter-spacing: .12em;
+      white-space: nowrap;
+    }
+
+    .section-index a {
+      flex: 0 0 auto;
+      font-size: .9rem;
+      line-height: 1.4;
+    }
+
+    .section-index a span {
+      margin-right: 7px;
+      color: var(--accent);
+      font-size: .77rem;
+    }
+
+    #main-content,
+    .research-section,
+    .research-topic,
+    .people-section {
+      scroll-margin-top: calc(var(--fixed-nav-height) + 16px);
+    }
+
+    .research-hero {
+      position: relative;
+      padding: clamp(64px, 8vw, 96px) 0 clamp(48px, 6vw, 72px);
+      border-bottom: 1px solid var(--line);
+    }
+
+    .eyebrow {
+      margin: 0 0 22px;
+      color: var(--accent);
+      font-size: .77rem;
+      font-weight: 600;
+      letter-spacing: .16em;
+    }
+
+    h1 {
+      margin: 0;
+      font-size: clamp(3.2rem, 6.2vw, 5.2rem);
+      font-weight: 400;
+      letter-spacing: -.055em;
+      line-height: 1.02;
+    }
+
+    .hero-description {
+      max-width: 620px;
+      margin: 24px 0 0;
+      color: var(--muted);
+      font-size: clamp(1.08rem, 1.6vw, 1.25rem);
+      line-height: 1.72;
+    }
+
+    .research-section,
+    .people-section {
+      padding: clamp(48px, 6vw, 76px) 0;
+    }
+
+    .research-section + .research-section,
+    .people-section {
+      border-top: 1px solid var(--line);
+    }
+
+    .section-heading {
+      margin-bottom: clamp(18px, 2.5vw, 25px);
+    }
+
+    .section-number {
+      display: block;
+      margin-bottom: 12px;
+      color: var(--accent);
+      font-size: .8rem;
+      letter-spacing: .12em;
+    }
+
+    .section-heading h2 {
+      max-width: 650px;
+      margin: 0;
+      font-size: clamp(2rem, 3.3vw, 2.65rem);
+      font-weight: 400;
+      line-height: 1.23;
+      letter-spacing: -.028em;
+    }
+
+    .section-body p {
+      margin: 0;
+      font-size: 1.055rem;
+      line-height: 1.83;
+    }
+
+    .section-body p + p {
+      margin-top: var(--paragraph-space);
+    }
+
+    .research-topic {
+      margin-top: clamp(28px, 4vw, 40px);
+      padding-top: clamp(20px, 3vw, 26px);
+      border-top: 1px solid var(--line);
+    }
+
+    .topic-meta {
+      display: block;
+      margin-bottom: 10px;
+      color: var(--accent);
+      font-size: .73rem;
+      font-weight: 600;
+      letter-spacing: .13em;
+    }
+
+    .research-topic h3 {
+      margin: 0 0 16px;
+      font-size: clamp(1.55rem, 2.5vw, 2.1rem);
+      font-weight: 400;
+      line-height: 1.3;
+    }
+
+    .section-body .paper-links {
+      margin-top: var(--figure-space);
+      color: var(--muted);
+      font-size: .91rem;
+      line-height: 1.8;
+    }
+
+    .paper-links a {
+      display: inline-block;
+      margin-left: 10px;
+      color: var(--ink);
+      text-decoration: none;
+    }
+
+    .paper-links a:hover {
+      color: var(--accent);
+    }
+
+    .research-figure {
+      width: min(
+        100%,
+        var(--figure-width, var(--research-photo-default-width))
+      );
+      max-width: 100%;
+      min-width: 0;
+      margin: var(--figure-space) auto 0;
+    }
+
+    .research-figure > img,
+    .research-figure > .image-area > img {
+      display: block;
+      width: 100%;
+      max-width: 100%;
+      height: auto;
+    }
+
+    .research-figure > figcaption {
+      width: 100%;
+      margin: var(--caption-gap, var(--caption-space)) 0 0;
+      padding: 0;
+      border: 0;
+      color: var(--muted);
+      font-size: .8rem;
+      line-height: 1.65;
+      letter-spacing: .01em;
+      text-align: left;
+      overflow-wrap: anywhere;
+    }
+
+    .figure-pair {
+      --pair-left-width: 300px;
+      --pair-right-width: 300px;
+      --pair-left-column: 1fr;
+      --pair-right-column: 1fr;
+      --pair-gap: var(--image-row-gap);
+
+      width: min(
+        calc(
+          var(--pair-left-width) +
+          var(--pair-right-width) +
+          var(--pair-gap)
+        ),
+        calc(100vw - var(--page-gutter) - var(--page-gutter))
+      );
+
+      position: relative;
+      left: 50%;
+      transform: translateX(-50%);
+      display: grid;
+      grid-template-columns:
+        minmax(0, var(--pair-left-column))
+        minmax(0, var(--pair-right-column));
+      align-items: start;
+      gap: var(--pair-gap);
+      margin: var(--figure-space) 0 0;
+      padding: 0;
+    }
+
+    .figure-pair > .research-figure {
+      width: 100%;
+      max-width: none;
+      min-width: 0;
+      margin: 0;
+    }
+
+    .figure-pair .image-area {
+      display: block;
+      width: 100%;
+      margin: 0;
+      padding: 0;
+      height: auto;
+      min-height: 0;
+    }
+
+    .figure-pair > .research-figure > figcaption {
+      width: 100%;
+      margin-inline: 0;
+    }
+
+    .section-body .research-figure + p,
+    .section-body .figure-pair + p,
+    .section-body .research-figure + .research-figure {
+      margin-top: var(--figure-space);
+    }
+
+    .people-intro {
+      max-width: 660px;
+      margin: 18px 0 28px;
+      color: var(--muted);
+      font-size: 1.055rem;
+      line-height: 1.8;
+    }
+
+    .advisor-card {
+      display: flex;
+      align-items: var(--advisor-align, center);
+      gap: var(--advisor-gap, 24px);
+      margin-bottom: 38px;
+      padding: 25px;
+      border: 1px solid var(--line);
+      background: rgba(255, 255, 255, .28);
+    }
+
+    .advisor-card > div {
+      min-width: 0;
+      flex: 1;
+    }
+
+    .person-avatar {
+      --avatar-default-size: 92px;
+      width: min(100%, var(--avatar-size, var(--avatar-default-size)));
+      height: auto;
+      aspect-ratio: 1;
+      flex: 0 0 auto;
+      border: 1px solid var(--line);
+      border-radius: var(--avatar-radius, 50%);
+      background: #e7e5dc;
+      object-fit: cover;
+      object-position: var(--avatar-focus, 50% 50%);
+    }
+
+    .advisor-card .person-avatar {
+      --avatar-default-size: 112px;
+    }
+
+    .person-role {
+      margin: 0 0 7px;
+      color: var(--accent);
+      font-size: .73rem;
+      font-weight: 600;
+      letter-spacing: .13em;
+    }
+
+    .person-name {
+      margin: 0;
+      font-size: 1.45rem;
+      font-weight: 400;
+    }
+
+    .person-name a,
+    .advisor-affiliation a {
+      text-decoration: none;
+    }
+
+    .person-name a:hover {
+      color: var(--accent);
+    }
+
+    .advisor-card .person-name {
+      margin-bottom: 14px;
+      line-height: 1.2;
+    }
+
+    .advisor-affiliation,
+    .person-note {
+      color: var(--muted);
+      font-size: .98rem;
+      line-height: 1.65;
+    }
+
+    .advisor-affiliation {
+      margin: 0;
+    }
+
+    .person-note {
+      margin: 9px 0 0;
+    }
+
+    .people-subheading {
+      margin: 0 0 20px;
+      font-size: 1.45rem;
+      font-weight: 400;
+    }
+
+    .people-grid {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 16px;
+    }
+
+    .person-card {
+      min-width: 0;
+      padding: 20px 14px 18px;
+      border: 1px solid var(--line);
+      background: rgba(255, 255, 255, .22);
+      text-align: center;
+      transition: transform 180ms ease, border-color 180ms ease;
+    }
+
+    .person-card:hover {
+      transform: translateY(-3px);
+      border-color: rgba(151, 105, 77, .55);
+    }
+
+    .person-card .person-avatar {
+      --avatar-default-size: 78px;
+      margin-inline: auto;
+      margin-bottom: 12px;
+    }
+
+    .person-card .person-name {
+      font-size: 1.05rem;
+      line-height: 1.4;
+    }
+
+    .person-card .person-role {
+      margin-top: 7px;
+      font-size: .66rem;
+      letter-spacing: .1em;
+    }
+
+    .person-card .person-note {
+      font-size: .9rem;
+      line-height: 1.6;
+    }
+
+    .site-footer {
+      border-top: 1px solid var(--line);
+    }
+
+    .footer-inner {
+      min-height: 90px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 12px 24px;
+      padding-block: 22px;
+      color: var(--muted);
+      font-size: .88rem;
+    }
+
+    .footer-inner p {
+      margin: 0;
+    }
+
+    .black-hole-transition {
+      position: fixed;
+      z-index: 100;
+      left: 0;
+      top: 0;
+      width: 14px;
+      height: 14px;
+      margin: -7px 0 0 -7px;
+      border-radius: 50%;
+      pointer-events: none;
+      background: #14251f;
+      box-shadow:
+        0 0 0 2px rgba(151, 105, 77, .88),
+        0 0 0 7px rgba(151, 105, 77, .17);
+      animation: black-hole-bloom 540ms ease-in forwards;
+    }
+
+    @keyframes black-hole-bloom {
+      0% {
+        opacity: 0;
+        transform: scale(.4);
+      }
+      28% {
+        opacity: 1;
+        transform: scale(1);
+      }
+      100% {
+        opacity: 0;
+        transform: scale(.2);
+      }
+    }
+
+    @media (max-width: 760px) {
+      :root {
+        --site-header-height: 102px;
+      }
+
+      .header-inner {
+        min-height: auto;
+        align-items: flex-start;
+        flex-direction: column;
+        justify-content: center;
+        gap: 8px;
+        padding-block: 12px;
+      }
+
+      .nav {
+        width: 100%;
+        flex-wrap: nowrap;
+        justify-content: flex-start;
+        overflow-x: auto;
+        overscroll-behavior-x: contain;
+        scrollbar-width: thin;
+        scrollbar-color: rgba(151, 105, 77, .3) transparent;
+      }
+
+      .nav a {
+        flex: 0 0 auto;
+        min-height: 38px;
+        padding: 8px 12px;
+      }
+
+      .index-inner {
+        justify-content: flex-start;
+      }
+
+      .people-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+    }
+
+    @media (max-width: 650px) {
+      :root {
+        --section-index-height: 60px;
+        --page-gutter: 18px;
+      }
+
+      .container,
+      .reading-column {
+        width: min(calc(100% - 36px), var(--reading-width));
+      }
+
+      .nav {
+        gap: 4px;
+        font-size: .92rem;
+      }
+
+      .nav .language {
+        margin-left: 4px;
+        padding-left: 12px;
+      }
+
+      .index-inner {
+        width: calc(100% - 36px);
+        min-height: 60px;
+        gap: 6px;
+        padding-block: 8px;
+      }
+
+      .index-label {
+        margin-right: 4px;
+      }
+
+      .section-index a {
+        padding: 8px 11px;
+        font-size: .85rem;
+      }
+
+      .research-hero {
+        padding: 52px 0;
+      }
+
+      .research-section,
+      .people-section {
+        padding: 44px 0;
+      }
+
+      .section-body p {
+        font-size: 1.01rem;
+        line-height: 1.78;
+      }
+
+      .research-topic {
+        margin-top: 28px;
+        padding-top: 20px;
+      }
+
+      .research-figure {
+        width: min(
+          100%,
+          var(
+            --figure-mobile-width,
+            var(--figure-width, var(--research-photo-default-width))
+          )
+        );
+      }
+
+      .research-figure > figcaption {
+        font-size: .78rem;
+        line-height: 1.65;
+      }
+
+      .figure-pair {
+        width: 100%;
+        position: static;
+        left: auto;
+        transform: none;
+        grid-template-columns: minmax(0, 1fr);
+        gap: var(--figure-space);
+      }
+
+      .figure-pair > .research-figure {
+        width: min(
+          100%,
+          var(--figure-mobile-width, var(--figure-width, 100%))
+        );
+        max-width: 100%;
+        margin: 0 auto;
+      }
+
+      .person-avatar {
+        width: min(
+          100%,
+          var(
+            --avatar-mobile-size,
+            var(--avatar-size, var(--avatar-default-size))
+          )
+        );
+      }
+    }
+
+    @media (max-width: 480px) {
+      .advisor-card {
+        align-items: var(--advisor-mobile-align, flex-start);
+        gap: var(--advisor-mobile-gap, 16px);
+        padding: 19px;
+      }
+
+      .advisor-card .person-avatar {
+        --avatar-default-size: 82px;
+      }
+
+      .people-grid {
+        gap: 11px;
+      }
+
+      .person-card {
+        padding-inline: 9px;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      html {
+        scroll-behavior: auto;
+      }
+
+      .black-hole-transition {
+        animation: none;
+      }
+
+      a,
+      .nav a,
+      .section-index a,
+      .person-card {
+        transition: none;
+      }
+
+      .person-card:hover {
+        transform: none;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <!-- 从首屏移至这里，使星空覆盖整个页面的可视区域。 -->
+  <canvas class="starfield" aria-hidden="true"></canvas>
+
+  <a class="skip-link" href="#main-content">跳至主要内容</a>
+
+  <header class="site-header">
+    <div class="header-inner container">
+      <a class="site-name" href="homepage_C.html">
+        Yehui Hou Near a Black Hole
+      </a>
+
+      <nav class="nav" aria-label="主导航">
+        <a href="homepage_C.html">主页</a>
+        <a href="research.html" aria-current="page">研究</a>
+        <a href="CV_Chinese.pdf"
+           target="_blank"
+           rel="noopener noreferrer"
+           aria-label="查看中文简历 PDF（在新标签页打开）">简历</a>
+        <a href="https://inspirehep.net/authors/2052049?ui-citation-summary=true"
+           target="_blank"
+           rel="noopener noreferrer">论文发表</a>
+        <a href="interest_C.html">其他</a>
+        <a class="language"
+           href="research_E.html"
+           lang="en"
+           hreflang="en">English</a>
+      </nav>
+    </div>
+  </header>
+
+  <nav class="section-index" aria-label="研究方向">
+    <div class="index-inner">
+      <span class="index-label">浏览</span>
+      <a href="#black-hole-polarimetry">
+        <span>01</span>黑洞偏振图像
+      </a>
+      <a href="#spacetime-perturbations">
+        <span>02</span>引力扰动的电磁信号
+      </a>
+      <a href="#gw-optics">
+        <span>03</span>引力波强透镜
+      </a>
+      <a href="#people">
+        <span>04</span>导师与合作者
+      </a>
+    </div>
+  </nav>
+
+  <!-- 原有导航高度同步逻辑保持不变。 -->
+  <script>
+    (() => {
+      const root = document.documentElement;
+      const header = document.querySelector(".site-header");
+      const index = document.querySelector(".section-index");
+
+      if (!header || !index) return;
+
+      function updateNavigationHeight() {
+        root.style.setProperty(
+          "--site-header-height",
+          `${Math.ceil(header.getBoundingClientRect().height)}px`
+        );
+        root.style.setProperty(
+          "--section-index-height",
+          `${Math.ceil(index.getBoundingClientRect().height)}px`
+        );
+      }
+
+      updateNavigationHeight();
+
+      if ("ResizeObserver" in window) {
+        const observer = new ResizeObserver(updateNavigationHeight);
+        observer.observe(header);
+        observer.observe(index);
+      }
+
+      window.addEventListener("resize", updateNavigationHeight);
+      window.addEventListener("load", updateNavigationHeight);
+
+      if (document.fonts) {
+        document.fonts.ready.then(updateNavigationHeight);
+      }
+    })();
+  </script>
+
+  <main id="main-content" tabindex="-1">
+    <section class="research-hero" aria-labelledby="page-title">
+      <div class="reading-column">
+        <p class="eyebrow">Research</p>
+        <h1 id="page-title">研究</h1>
+        <p class="hero-description">
+          我研究光与引力波在黑洞强引力场中的传播、相互作用与可观测效应。近期工作主要关注
+          黑洞偏振学、引力扰动对光线的影响，以及旋转黑洞
+          对引力波产生的强透镜和放大效应。
+        </p>
+      </div>
+    </section>
+
+    <section class="research-section"
+             id="black-hole-polarimetry"
+             aria-labelledby="polarimetry-heading">
+      <div class="reading-column">
+        <div class="section-heading">
+          <span class="section-number">01 / 研究方向</span>
+          <h2 id="polarimetry-heading">黑洞偏振图像</h2>
+        </div>
+
+        <div class="section-body">
+          <p>
+            偏振成像为研究超大质量黑洞周围环境增添了重要的信息维度：
+            它携带着磁场、辐射等离子体以及光所经过的时空几何的信息。
+            我们研究事件视界附近及相对论性喷流更远区域中的偏振图样，
+            探讨不同区域中的物理效应如何影响这些图样。
+          </p>
+
+          <figure class="research-figure" style="--figure-width: 470px;">
+            <img src="black-hole-eht-2019.jpg"
+                 alt="事件视界望远镜拍摄的 M87* 图像，用于介绍黑洞成像的观测背景"
+                 loading="lazy"
+                 decoding="async">
+            <figcaption>
+              事件视界望远镜（EHT）拍摄的 M87* 图像
+            </figcaption>
+          </figure>
+
+          <article class="research-topic" id="near-horizon-polarization">
+            <span class="topic-meta">旋转黑洞的独特印记</span>
+            <h3>近视界偏振</h3>
+
+            <p>
+              在旋转黑洞的事件视界附近，磁化吸积流呈现出共同的运动特征。
+              我们证明，在所采用的模型假设下，
+              这种运动会产生独特的同步辐射偏振图样，
+              即近视界偏振（near-horizon polarization，NHP）。
+              该图样在很大程度上不依赖吸积流的具体细节，
+              其结构取决于黑洞自旋和观测者的视向。
+            </p>
+
+            <p>
+              检验这一预测需要未来的甚长基线干涉测量，
+              以分辨紧邻事件视界区域的线偏振结构。
+              我们正在将计算拓展至最低阶近视界近似之外，
+              并探索 Kerr 时空以外的旋转时空中是否存在类似的偏振图样。
+            </p>
+
+            <figure class="research-figure" style="--figure-width: 800px;">
+              <div class="image-area">
+                <img src="nhp.png"
+                     alt="左：近视界偏振方向与参考等值线的理论示意图。右：不同黑洞自旋与观测视角参数下的近视界偏振理论曲线。"
+                     loading="lazy"
+                     decoding="async">
+              </div>
+              <figcaption>
+                左：近视界偏振方向与参考等值线的理论示意图。右：不同黑洞自旋与观测视角参数下的近视界偏振理论曲线。
+              </figcaption>
+            </figure>
+
+            <p class="paper-links">
+              相关论文：
+              <a href="https://arxiv.org/pdf/2409.07248"
+                 target="_blank"
+                 rel="noopener noreferrer">arXiv:2409.07248</a>
+              <a href="https://arxiv.org/pdf/2606.19229"
+                 target="_blank"
+                 rel="noopener noreferrer">arXiv:2606.19229</a>
+            </p>
+          </article>
+
+          <article class="research-topic" id="jet-polarization">
+            <span class="topic-meta">从中心引擎到喷流</span>
+            <h3>喷流结构与偏振</h3>
+
+            <p>
+              黑洞喷流将中心引擎的物理过程与更大尺度上的辐射联系起来。
+              在稳态、轴对称的广义相对论磁流体动力学框架下，
+              我们发展了半解析喷流模型，
+              并构建了适用于多个空间尺度的偏振成像模板。
+            </p>
+
+            <p>
+              这些模型展示了等离子体惯性、磁场缠绕、喷流准直和黑洞自旋
+              如何塑造喷流不同区域的辐射强度与偏振结构。
+              它们为未来偏振数据提供了可能的物理解释；
+              应用于具体天体时，仍需详细考虑其辐射机制与观测条件。
+            </p>
+
+            <figure class="research-figure" style="--figure-width: 800px;">
+              <div class="image-area">
+                <img src="jet.png"
+                     alt="不同假设下的喷流辐射强度与偏振结构模型"
+                     loading="lazy"
+                     decoding="async">
+              </div>
+              <figcaption>
+                左：GRMHD喷流模型的光强图像与偏振结构。右：不同模型参数下，喷流偏振角随空间尺度的变化曲线。
+              </figcaption>
+            </figure>
+
+            <p class="paper-links">
+              相关论文：
+              <a href="https://arxiv.org/pdf/2507.23281"
+                 target="_blank"
+                 rel="noopener noreferrer">arXiv:2507.23281</a>
+              <a href="https://arxiv.org/pdf/2607.01820"
+                 target="_blank"
+                 rel="noopener noreferrer">arXiv:2607.01820</a>
+            </p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="research-section"
+             id="spacetime-perturbations"
+             aria-labelledby="perturbations-heading">
+      <div class="reading-column">
+        <div class="section-heading">
+          <span class="section-number">02 / 研究方向</span>
+          <h2 id="perturbations-heading">引力扰动的电磁信号</h2>
+        </div>
+
+        <div class="section-body">
+          <p>
+            经过的引力扰动能够改变光线的传播路径及其偏振的输运方式。
+            我们研究了一个模型，其中光在黑洞振铃阶段从黑洞附近发出。
+            解析计算与数值模拟表明，
+            时空扰动可以引起光源视位置和观测偏振角的变化。
+          </p>
+
+          <p>
+            原则上，这些变化可能携带产生它们的引力扰动的信息。
+            我们的工作也提供了一套计算受扰时空中光传播的框架，
+            有望推广至其他系统，包括极端质量比旋近系统。
+            对于具体系统，这些信号的可观测性仍需进一步研究。
+          </p>
+
+          <figure class="research-figure" style="--figure-width: 800px;">
+            <img src="QNM.png"
+                 alt="受引力扰动影响的光偏振角随时间变化的理论结果"
+                 loading="lazy"
+                 decoding="async">
+            <figcaption>
+              具有基态准正则模的克尔黑洞时空附近发射光线的偏振角的时间变化曲线。
+            </figcaption>
+          </figure>
+
+          <p class="paper-links">
+            相关论文：
+            <a href="https://arxiv.org/pdf/2605.11499"
+               target="_blank"
+               rel="noopener noreferrer">arXiv:2605.11499</a>
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <section class="research-section"
+             id="gw-optics"
+             aria-labelledby="gw-heading">
+      <div class="reading-column">
+        <div class="section-heading">
+          <span class="section-number">03 / 研究方向</span>
+          <h2 id="gw-heading">引力波强透镜</h2>
+        </div>
+
+        <div class="section-body">
+          <p>
+            与光类似，引力波也会受到大质量天体的引力透镜作用。
+            当波长相对于相关透镜尺度足够短时，
+            几何光学为研究引力波在黑洞附近的传播提供了一种方法。
+            尽管尚无引力波透镜事件得到确认，
+            理解其可能的信号特征对于未来的搜寻仍十分重要。
+          </p>
+
+          <figure class="research-figure" style="--figure-width: 510px;">
+            <img src="gw-optics-background-1.png"
+                 alt="引力波源、黑洞透镜与观测者之间几何关系的概念示意图"
+                 loading="lazy"
+                 decoding="async">
+            <figcaption>引力波透镜几何的概念示意图。</figcaption>
+          </figure>
+
+          <p>
+            利用 Kerr 黑洞透镜理论和强引力场中焦散面的几何结构，
+            我们计算了透镜信号的时域结构。
+            对于一系列波源与观测者构型，
+            模型预测信号会出现一连串短时增强。
+            这些特征的到达时刻与时间间隔取决于黑洞自旋，
+            以及波源与观测者的几何构型。
+          </p>
+
+          <figure class="research-figure" style="--figure-width: 800px;">
+            <img src="gw-optics-2.png"
+                 alt="Kerr 黑洞透镜几何与强引力场焦散面的理论示意图"
+                 loading="lazy"
+                 decoding="async">
+            <figcaption>
+              Kerr 黑洞的理论透镜几何，
+              展示波源位置、观测方向与强引力场结构之间的关系。
+            </figcaption>
+          </figure>
+
+          <figure class="research-figure" style="--figure-width: 800px;">
+            <img src="gw-optics-3.png"
+                 alt="不同黑洞自旋与波源—观测者构型下的理论透镜时间延迟"
+                 loading="lazy"
+                 decoding="async">
+            <figcaption>
+              不同黑洞自旋与几何构型下的透镜时间延迟预测。
+            </figcaption>
+          </figure>
+
+          <p>
+            我们也在研究引力法拉第旋转如何影响
+            引力波在旋转时空中传播时的偏振演化。
+          </p>
+
+          <p class="paper-links">
+            相关论文：
+            <a href="https://arxiv.org/pdf/2610.08399"
+               target="_blank"
+               rel="noopener noreferrer">arXiv:2610.08399</a>
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <section class="people-section"
+             id="people"
+             aria-labelledby="people-heading">
+      <div class="reading-column">
+        <div class="section-heading">
+          <span class="section-number">04 / 师友</span>
+          <h2 id="people-heading">导师与合作者</h2>
+        </div>
+
+        <p class="people-intro">
+          不仅是科研上的合作者，也是良师益友。
+        </p>
+
+        <article class="advisor-card"
+                 style="
+                   --advisor-gap: 24px;
+                   --advisor-align: center;
+                   --advisor-mobile-gap: 16px;
+                   --advisor-mobile-align: flex-start;
+                 ">
+          <img class="person-avatar"
+               src="cb1.png"
+               alt="Bin Chen 的照片"
+               loading="lazy"
+               decoding="async"
+               style="
+                 --avatar-size: 112px;
+                 --avatar-mobile-size: 82px;
+                 --avatar-focus: 50% 50%;
+               ">
+
+          <div>
+            <p class="person-role">博士生导师</p>
+
+            <h3 class="person-name">
+              <a href="https://ifpqt.nbu.edu.cn/info/1041/1161.htm"
+                 target="_blank"
+                 rel="noopener noreferrer">陈斌</a> 教授
+            </h3>
+
+            <p class="advisor-affiliation">
+              <a href="https://ifpqt.nbu.edu.cn/"
+                 target="_blank"
+                 rel="noopener noreferrer">宁波大学基础物理与量子科技研究院</a> 院长
+            </p>
+
+            <p class="person-note">
+              陈老师是我学术道路上的引路人，常以恳切的劝诫助我们成长。
+              他长期从事弦理论与<a
+                href="https://en.wikipedia.org/wiki/AdS/CFT_correspondence"
+                target="_blank"
+                rel="noopener noreferrer">全息对偶</a>研究，近年来开始关注黑洞天体物理问题。
+            </p>
+          </div>
+        </article>
+
+        <h3 class="people-subheading">
+          密切合作者（博士后&amp;博士研究生）
+        </h3>
+
+        <div class="people-grid">
+          <article class="person-card">
+            <img class="person-avatar"
+                 src="zzy.jpg"
+                 alt="Zhenyu Zhang 的照片"
+                 loading="lazy"
+                 decoding="async">
+            <h4 class="person-name">
+              <a href="https://zhenyuzhang98.github.io/"
+                 target="_blank"
+                 rel="noopener noreferrer">张震宇</a>
+            </h4>
+            <p class="person-role">
+              博士后 ·
+              <a href="https://ifpqt.nbu.edu.cn/"
+                 target="_blank"
+                 rel="noopener noreferrer">NBU</a>
+            </p>
+            <p class="person-note">
+              震宇思维敏捷，乐于分享。我珍视与他的共同探索。
+            </p>
+          </article>
+
+          <article class="person-card">
+            <img class="person-avatar"
+                 src="zzl.jpg"
+                 alt="Zelin Zhang 的照片"
+                 loading="lazy"
+                 decoding="async">
+            <h4 class="person-name">
+              <a href="https://ifpqt.nbu.edu.cn/info/1061/3082.htm"
+                 target="_blank"
+                 rel="noopener noreferrer">张泽林</a>
+            </h4>
+            <p class="person-role">
+              博士后 ·
+              <a href="https://ifpqt.nbu.edu.cn/"
+                 target="_blank"
+                 rel="noopener noreferrer">NBU</a>
+            </p>
+            <p class="person-note">
+              泽林深耕Ai物理，考虑周全。我们相互交流并启发。
+            </p>
+          </article>
+
+          <article class="person-card">
+            <img class="person-avatar"
+                 src="wq.jpg"
+                 alt="Qian Wan 的照片"
+                 loading="lazy"
+                 decoding="async">
+            <h4 class="person-name">
+              <a href="https://inspirehep.net/authors/2955095"
+                 target="_blank"
+                 rel="noopener noreferrer">万谦</a>
+            </h4>
+            <p class="person-role">
+              博士后 ·
+              <a href="https://www2.scut.edu.cn/physics/"
+                 target="_blank"
+                 rel="noopener noreferrer">SCUT</a>
+            </p>
+            <p class="person-note">
+              初入黑洞研究领域时，万谦便展现了出色的业务能力。
+            </p>
+          </article>
+
+          <article class="person-card">
+            <img class="person-avatar"
+                 src="sy1.jpg"
+                 alt="Yu Song 的照片"
+                 loading="lazy"
+                 decoding="async">
+            <h4 class="person-name">
+              <a href="https://inspirehep.net/authors/2810992?ui-citation-summary=true"
+                 target="_blank"
+                 rel="noopener noreferrer">宋屿</a>
+            </h4>
+            <p class="person-role">
+              博士后 ·
+              <a href="https://www.shao.ac.cn/"
+                 target="_blank"
+                 rel="noopener noreferrer">SHAO</a>
+            </p>
+            <p class="person-note">
+              宋屿沉稳而坚韧。我们携手推进喷流的建模。
+            </p>
+          </article>
+
+          <article class="person-card">
+            <img class="person-avatar"
+                 src="hjw.jpg"
+                 alt="Jiewei Huang 的照片"
+                 loading="lazy"
+                 decoding="async">
+            <h4 class="person-name">
+              <a href="https://inspirehep.net/authors/2763306?ui-citation-summary=true"
+                 target="_blank"
+                 rel="noopener noreferrer">黄杰伟</a>
+            </h4>
+            <p class="person-role">
+              博士研究生 ·
+              <a href="https://www.phy.pku.edu.cn/index.htm"
+                 target="_blank"
+                 rel="noopener noreferrer">PKU</a>
+            </p>
+            <p class="person-note">
+              杰伟是优秀的合作者，兼具可贵的好奇心和计算能力。
+            </p>
+          </article>
+
+          <article class="person-card">
+            <img class="person-avatar"
+                 src="wyt.jpg"
+                 alt="Yuting Wen 的照片"
+                 loading="lazy"
+                 decoding="async">
+            <h4 class="person-name">温煜珽</h4>
+            <p class="person-role">
+              博士研究生 ·
+              <a href="https://www.phy.pku.edu.cn/index.htm"
+                 target="_blank"
+                 rel="noopener noreferrer">PKU</a>
+            </p>
+            <p class="person-note">
+              煜珽善于理解新领域，他的思路常带来新的启发。
+            </p>
+          </article>
+
+          <article class="person-card">
+            <img class="person-avatar"
+                 src="xjz.jpg"
+                 alt="Jingze Xia 的照片"
+                 loading="lazy"
+                 decoding="async">
+            <h4 class="person-name">
+              <a href="https://inspirehep.net/authors/3108643?ui-citation-summary=true"
+                 target="_blank"
+                 rel="noopener noreferrer">夏竞择</a>
+            </h4>
+            <p class="person-role">
+              博士研究生 ·
+              <a href="https://tdli.sjtu.edu.cn/"
+                 target="_blank"
+                 rel="noopener noreferrer">TDLI</a>
+            </p>
+            <p class="person-note">
+              竞择积极进取，功底扎实，正在探索挑战性的课题。
+            </p>
+          </article>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="footer-inner container">
+      <p>© Yehui Hou</p>
+      <p>黑洞 · 偏振图像 · 引力波</p>
+    </div>
+  </footer>
+
+  <script>
+    (() => {
+      "use strict";
+
+      const canvas = document.querySelector(".starfield");
+      if (!canvas) return;
+
+      const ctx = canvas.getContext("2d");
+      if (!ctx) return;
+
+      const motionPreference =
+        window.matchMedia("(prefers-reduced-motion: reduce)");
+
+      const tau = Math.PI * 2;
+      const stars = [];
+
+      let width = 0;
+      let height = 0;
+      let animationId = null;
+      let resizeId = null;
+
+      const starClusters = [
+        { x: .15, y: .28, spreadX: .18, spreadY: .28 },
+        { x: .79, y: .25, spreadX: .20, spreadY: .30 },
+        { x: .65, y: .80, spreadX: .24, spreadY: .22 }
+      ];
+
+      function randomNormal() {
+        const u = Math.max(Number.EPSILON, Math.random());
+        const v = Math.random();
+
+        return Math.sqrt(-2 * Math.log(u)) * Math.cos(tau * v);
+      }
+
+      function createStar() {
+        let x = Math.random();
+        let y = Math.random();
+
+        if (Math.random() < .32) {
+          const cluster =
+            starClusters[Math.floor(Math.random() * starClusters.length)];
+
+          const candidateX =
+            cluster.x + randomNormal() * cluster.spreadX;
+          const candidateY =
+            cluster.y + randomNormal() * cluster.spreadY;
+
+          if (
+            candidateX >= 0 && candidateX <= 1 &&
+            candidateY >= 0 && candidateY <= 1
+          ) {
+            x = candidateX;
+            y = candidateY;
+          }
+        }
+
+        const bright = Math.random() < .13;
+
+        return {
+          x,
+          y,
+          radius: bright
+            ? .85 + Math.random() * .65
+            : .25 + Math.pow(Math.random(), 1.7) * .75,
+          baseAlpha: bright
+            ? .30 + Math.random() * .18
+            : .14 + Math.random() * .23,
+
+          breathAmount: .08 + Math.random() * .16,
+          breathPhase: Math.random() * tau,
+          breathPeriod: 4.5 + Math.random() * 8.5,
+
+          secondaryPhase: Math.random() * tau,
+          secondaryPeriod: 9 + Math.random() * 12,
+
+          twinklePhase: Math.random() * tau,
+          twinklePeriod: 1.5 + Math.random() * 3.5,
+          twinkleAmount: bright
+            ? .20 + Math.random() * .12
+            : .09 + Math.random() * .09,
+
+          bright,
+          color: Math.random() < .18
+            ? "151, 105, 77"
+            : "91, 109, 98"
+        };
+      }
+
+      function draw(now = performance.now()) {
+        const time = now / 1000;
+        const reducedMotion = motionPreference.matches;
+
+        ctx.clearRect(0, 0, width, height);
+
+        for (const star of stars) {
+          const breath = reducedMotion
+            ? 0
+            : Math.sin(
+                time * tau / star.breathPeriod + star.breathPhase
+              );
+
+          const secondary = reducedMotion
+            ? 0
+            : Math.sin(
+                time * tau / star.secondaryPeriod + star.secondaryPhase
+              );
+
+          const twinkle = reducedMotion
+            ? 0
+            : (
+                .75 * Math.sin(
+                  time * tau / star.twinklePeriod + star.twinklePhase
+                ) +
+                .25 * Math.sin(
+                  time * tau / (star.twinklePeriod * .61) +
+                  star.secondaryPhase
+                )
+              );
+
+          const alpha = Math.max(
+            .025,
+            Math.min(
+              .90,
+              star.baseAlpha +
+              breath * star.breathAmount +
+              secondary * .035 +
+              twinkle * star.twinkleAmount
+            )
+          );
+
+          const x = star.x * width;
+          const y = star.y * height;
+
+          if (star.bright) {
+            const glow = ctx.createRadialGradient(
+              x, y, 0,
+              x, y, star.radius * 3.8
+            );
+
+            glow.addColorStop(
+              0,
+              `rgba(${star.color}, ${alpha * .24})`
+            );
+            glow.addColorStop(1, `rgba(${star.color}, 0)`);
+
+            ctx.fillStyle = glow;
+            ctx.beginPath();
+            ctx.arc(x, y, star.radius * 3.8, 0, tau);
+            ctx.fill();
+          }
+
+          ctx.beginPath();
+          ctx.arc(x, y, star.radius, 0, tau);
+          ctx.fillStyle = `rgba(${star.color}, ${alpha})`;
+          ctx.fill();
+        }
+      }
+
+      function resize() {
+        const rect = canvas.getBoundingClientRect();
+        const ratio = Math.min(window.devicePixelRatio || 1, 2);
+
+        width = rect.width;
+        height = rect.height;
+
+        canvas.width = Math.max(1, Math.round(width * ratio));
+        canvas.height = Math.max(1, Math.round(height * ratio));
+
+        ctx.setTransform(ratio, 0, 0, ratio, 0, 0);
+
+        /* 修改：星点数量减少约三分之一，其余星点参数不变。 */
+        const count = Math.min(
+          430,
+          Math.max(40, Math.floor(width * height / 4500))
+        );
+
+        while (stars.length < count) {
+          stars.push(createStar());
+        }
+
+        if (stars.length > count) {
+          stars.length = count;
+        }
+
+        draw();
+      }
+
+      function scheduleResize() {
+        if (resizeId !== null) return;
+
+        resizeId = requestAnimationFrame(() => {
+          resizeId = null;
+          resize();
+        });
+      }
+
+      function animate(now) {
+        animationId = null;
+
+        if (document.hidden || motionPreference.matches) return;
+
+        draw(now);
+        animationId = requestAnimationFrame(animate);
+      }
+
+      function updateAnimation() {
+        if (animationId !== null) {
+          cancelAnimationFrame(animationId);
+          animationId = null;
+        }
+
+        if (document.hidden) return;
+
+        draw();
+
+        if (!motionPreference.matches) {
+          animationId = requestAnimationFrame(animate);
+        }
+      }
+
+      resize();
+      updateAnimation();
+
+      window.addEventListener("resize", scheduleResize);
+      document.addEventListener("visibilitychange", updateAnimation);
+
+      window.addEventListener("pagehide", () => {
+        if (animationId !== null) {
+          cancelAnimationFrame(animationId);
+          animationId = null;
+        }
+      });
+
+      window.addEventListener("pageshow", () => {
+        scheduleResize();
+        updateAnimation();
+      });
+
+      if ("ResizeObserver" in window) {
+        const observer = new ResizeObserver(scheduleResize);
+        observer.observe(canvas);
+      }
+
+      if (motionPreference.addEventListener) {
+        motionPreference.addEventListener("change", updateAnimation);
+      } else if (motionPreference.addListener) {
+        motionPreference.addListener(updateAnimation);
+      }
+    })();
+  </script>
+</body>
+</html>

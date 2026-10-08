@@ -1,0 +1,1684 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description"
+        content="Yehui Hou's research on black hole polarimetric imaging, electromagnetic signatures of spacetime perturbations, and gravitational-wave optics.">
+  <title>Research | Yehui Hou</title>
+
+  <style>
+    :root {
+      --paper: #f5f3eb;
+      --ink: #243831;
+      --muted: #64736b;
+      --accent: #97694d;
+      --line: #d6dcd2;
+      --reading-width: 680px;
+
+      --site-header-height: 82px;
+      --section-index-height: 66px;
+      --fixed-nav-height:
+        calc(var(--site-header-height) + var(--section-index-height));
+
+      --nav-surface: rgba(245, 243, 235, .96);
+      --nav-hover: rgba(151, 105, 77, .08);
+      --nav-active: rgba(151, 105, 77, .13);
+
+      --research-photo-default-width: 590px;
+
+      --figure-space: clamp(10px, 1.5vw, 16px);
+      --caption-space: clamp(5px, .7vw, 8px);
+      --image-row-gap: clamp(6px, 1vw, 12px);
+      --paragraph-space: clamp(12px, 1.8vw, 18px);
+      --page-gutter: 32px;
+    }
+
+    *,
+    *::before,
+    *::after {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+      padding-top: var(--fixed-nav-height);
+      background: var(--paper);
+      color: var(--ink);
+      font-family: Georgia, "Times New Roman", serif;
+      -webkit-font-smoothing: antialiased;
+      overflow-wrap: break-word;
+    }
+
+    /* The only background layout change: stars cover the entire viewport. */
+    .starfield {
+      position: fixed;
+      z-index: 0;
+      inset: 0;
+      display: block;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+    }
+
+    #main-content,
+    .site-footer {
+      position: relative;
+      z-index: 1;
+    }
+
+    img {
+      display: block;
+      max-width: 100%;
+      height: auto;
+    }
+
+    /* Update: replace link underlines with a soft glow for interaction feedback. */
+    a {
+      color: inherit;
+      text-decoration: none;
+      transition: text-shadow 180ms ease;
+    }
+
+    a:hover,
+    a:focus-visible {
+      text-shadow:
+        0 0 7px rgba(151, 105, 77, .30),
+        0 0 15px rgba(151, 105, 77, .16);
+    }
+
+    a:focus-visible {
+      outline: 2px solid var(--accent);
+      outline-offset: 4px;
+    }
+
+    .container {
+      width: min(calc(100% - 64px), 1140px);
+      margin-inline: auto;
+    }
+
+    .reading-column {
+      width: min(calc(100% - 48px), var(--reading-width));
+      margin-inline: auto;
+    }
+
+    .skip-link {
+      position: fixed;
+      z-index: 110;
+      top: -100px;
+      left: 16px;
+      padding: 12px 16px;
+      border-radius: 8px;
+      background: var(--ink);
+      color: var(--paper);
+    }
+
+    .skip-link:focus {
+      top: 12px;
+    }
+
+    .nav,
+    .eyebrow,
+    .index-label,
+    .section-index,
+    .section-number,
+    .topic-meta,
+    .paper-links,
+    figcaption,
+    .footer-inner,
+    .person-role {
+      font-family: Arial, Helvetica, sans-serif;
+    }
+
+    /* The original header layout is unchanged. */
+    .site-header {
+      position: fixed;
+      z-index: 50;
+      inset: 0 0 auto;
+      background: var(--nav-surface);
+      border-bottom: 1px solid var(--line);
+      -webkit-backdrop-filter: blur(14px);
+      backdrop-filter: blur(14px);
+    }
+
+    .header-inner {
+      min-height: 82px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+    }
+
+    /* Update: match the site-name font, weight, and letter spacing in homepage_C.html. */
+    .site-name {
+      flex: none;
+      font-family: "Noto Serif CJK SC", "Source Han Serif SC",
+                   "Songti SC", "STSong", "SimSun", Georgia, serif;
+      font-size: 1.12rem;
+      font-weight: 700;
+      letter-spacing: .08em;
+      text-decoration: none;
+      white-space: nowrap;
+    }
+
+    /* Update: use the navigation font stack from homepage_C.html. */
+    .nav {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: flex-end;
+      gap: 6px;
+      font-family: "PingFang SC", "Microsoft YaHei",
+                   "Noto Sans CJK SC", Arial, sans-serif;
+      font-size: .98rem;
+      font-weight: 500;
+    }
+
+    .nav a,
+    .section-index a {
+      display: inline-flex;
+      align-items: center;
+      min-height: 40px;
+      padding: 9px 14px;
+      border-radius: 999px;
+      text-decoration: none;
+      white-space: nowrap;
+      transition:
+        color 180ms ease,
+        background-color 180ms ease,
+        text-shadow 180ms ease;
+    }
+
+    .nav a {
+      justify-content: center;
+    }
+
+    .nav a:hover,
+    .section-index a:hover,
+    .section-index a:focus-visible {
+      color: var(--accent);
+      background: var(--nav-hover);
+    }
+
+    .nav a[aria-current="page"] {
+      color: var(--accent);
+      background: var(--nav-active);
+    }
+
+    .nav .language {
+      margin-left: 6px;
+      padding-left: 16px;
+      border-left: 1px solid var(--line);
+      border-radius: 0;
+    }
+
+    /* The original section-index layout is unchanged. */
+    .section-index {
+      position: fixed;
+      z-index: 49;
+      top: var(--site-header-height);
+      right: 0;
+      left: 0;
+      background: var(--nav-surface);
+      border-bottom: 1px solid var(--line);
+      box-shadow: 0 6px 20px rgba(36, 56, 49, .05);
+      -webkit-backdrop-filter: blur(14px);
+      backdrop-filter: blur(14px);
+    }
+
+    .index-inner {
+      width: min(calc(100% - 64px), 1140px);
+      min-height: 66px;
+      margin-inline: auto;
+      padding-block: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-wrap: nowrap;
+      gap: 8px;
+      overflow-x: auto;
+      overscroll-behavior-x: contain;
+      scrollbar-width: thin;
+      scrollbar-color: rgba(151, 105, 77, .3) transparent;
+    }
+
+    .index-label {
+      flex: 0 0 auto;
+      margin-right: 8px;
+      color: var(--accent);
+      font-size: .76rem;
+      font-weight: 600;
+      letter-spacing: .12em;
+      white-space: nowrap;
+    }
+
+    .section-index a {
+      flex: 0 0 auto;
+      font-size: .9rem;
+      line-height: 1.4;
+    }
+
+    .section-index a span {
+      margin-right: 7px;
+      color: var(--accent);
+      font-size: .77rem;
+    }
+
+    #main-content,
+    .research-section,
+    .research-topic,
+    .people-section {
+      scroll-margin-top: calc(var(--fixed-nav-height) + 16px);
+    }
+
+    .research-hero {
+      position: relative;
+      padding: clamp(64px, 8vw, 96px) 0 clamp(48px, 6vw, 72px);
+      border-bottom: 1px solid var(--line);
+    }
+
+    .eyebrow {
+      margin: 0 0 22px;
+      color: var(--accent);
+      font-size: .77rem;
+      font-weight: 600;
+      letter-spacing: .16em;
+    }
+
+    h1 {
+      margin: 0;
+      font-size: clamp(3.2rem, 6.2vw, 5.2rem);
+      font-weight: 400;
+      letter-spacing: -.055em;
+      line-height: 1.02;
+    }
+
+    .hero-description {
+      max-width: 620px;
+      margin: 24px 0 0;
+      color: var(--muted);
+      font-size: clamp(1.08rem, 1.6vw, 1.25rem);
+      line-height: 1.72;
+    }
+
+    .research-section,
+    .people-section {
+      padding: clamp(48px, 6vw, 76px) 0;
+    }
+
+    .research-section + .research,
+    .people-section {
+      border-top: 1px solid var(--line);
+    }
+
+    .section-heading {
+      margin-bottom: clamp(18px, 2.5vw, 25px);
+    }
+
+    .section-number {
+      display: block;
+      margin-bottom: 12px;
+      color: var(--accent);
+      font-size: .8rem;
+      letter-spacing: .12em;
+    }
+
+    .section-heading h2 {
+      max-width: 650px;
+      margin: 0;
+      font-size: clamp(2rem, 3.3vw, 2.65rem);
+      font-weight: 400;
+      line-height: 1.23;
+      letter-spacing: -.028em;
+    }
+
+    .section-body p {
+      margin: 0;
+      font-size: 1.055rem;
+      line-height: 1.83;
+    }
+
+    .section-body p + p {
+      margin-top: var(--paragraph-space);
+    }
+
+    .research-topic {
+      margin-top: clamp(28px, 4vw, 40px);
+      padding-top: clamp(20px, 3vw, 26px);
+      border-top: 1px solid var(--line);
+    }
+
+    .topic-meta {
+      display: block;
+      margin-bottom: 10px;
+      color: var(--accent);
+      font-size: .73rem;
+      font-weight: 600;
+      letter-spacing: .13em;
+    }
+
+    .research-topic h3 {
+      margin: 0 0 16px;
+      font-size: clamp(1.55rem, 2.5vw, 2.1rem);
+      font-weight: 400;
+      line-height: 1.3;
+    }
+
+    .section-body .paper-links {
+      margin-top: var(--figure-space);
+      color: var(--muted);
+      font-size: .91rem;
+      line-height: 1.8;
+    }
+
+    .paper-links a {
+      display: inline-block;
+      margin-left: 10px;
+      color: var(--ink);
+      text-decoration: none;
+    }
+
+    .paper-links a:hover {
+      color: var(--accent);
+    }
+
+    .research-figure {
+      width: min(
+        100%,
+        var(--figure-width, var(--research-photo-default-width))
+      );
+      max-width: 100%;
+      min-width: 0;
+      margin: var(--figure-space) auto 0;
+    }
+
+    .research-figure > img,
+    .research-figure > .image-area > img {
+      display: block;
+      width: 100%;
+      max-width: 100%;
+      height: auto;
+    }
+
+    .research-figure > figcaption {
+      width: 100%;
+      margin: var(--caption-gap, var(--caption-space)) 0 0;
+      padding: 0;
+      border: 0;
+      color: var(--muted);
+      font-size: .8rem;
+      line-height: 1.65;
+      letter-spacing: .01em;
+      text-align: left;
+      overflow-wrap: anywhere;
+    }
+
+    .figure-pair {
+      --pair-left-width: 300px;
+      --pair-right-width: 300px;
+      --pair-left-column: 1fr;
+      --pair-right-column: 1fr;
+      --pair-gap: var(--image-row-gap);
+
+      width: min(
+        calc(
+          var(--pair-left-width) +
+          var(--pair-right-width) +
+          var(--pair-gap)
+        ),
+        calc(100vw - var(--page-gutter) - var(--page-gutter))
+      );
+
+      position: relative;
+      left: 50%;
+      transform: translateX(-50%);
+      display: grid;
+      grid-template-columns:
+        minmax(0, var(--pair-left-column))
+        minmax(0, var(--pair-right-column));
+      align-items: start;
+      gap: var(--pair-gap);
+      margin: var(--figure-space) 0 0;
+      padding: 0;
+    }
+
+    .figure-pair > .research-figure {
+      width: 100%;
+      max-width: none;
+      min-width: 0;
+      margin: 0;
+    }
+
+    .figure-pair .image-area {
+      display: block;
+      width: 100%;
+      margin: 0;
+      padding: 0;
+      height: auto;
+      min-height: 0;
+    }
+
+    .figure-pair > .research-figure > figcaption {
+      width: 100%;
+      margin-inline: 0;
+    }
+
+    .section-body .research-figure + p,
+    .section-body .figure-pair + p,
+    .section-body .research-figure + .research-figure {
+      margin-top: var(--figure-space);
+    }
+
+    .people-intro {
+      max-width: 660px;
+      margin: 18px 0 28px;
+      color: var(--muted);
+      font-size: 1.055rem;
+      line-height: 1.8;
+    }
+
+    .advisor-card {
+      display: flex;
+      align-items: var(--advisor-align, center);
+      gap: var(--advisor-gap, 24px);
+      margin-bottom: 38px;
+      padding: 25px;
+      border: 1px solid var(--line);
+      background: rgba(255, 255, 255, .28);
+    }
+
+    .advisor-card > div {
+      min-width: 0;
+      flex: 1;
+    }
+
+    .person-avatar {
+      --avatar-default-size: 92px;
+      width: min(100%, var(--avatar-size, var(--avatar-default-size)));
+      height: auto;
+      aspect-ratio: 1;
+      flex: 0 0 auto;
+      border: 1px solid var(--line);
+      border-radius: var(--avatar-radius, 50%);
+      background: #e7e5dc;
+      object-fit: cover;
+      object-position: var(--avatar-focus, 50% 50%);
+    }
+
+    .advisor-card .person-avatar {
+      --avatar-default-size: 112px;
+    }
+
+    .person-role {
+      margin: 0 0 7px;
+      color: var(--accent);
+      font-size: .73rem;
+      font-weight: 600;
+      letter-spacing: .13em;
+    }
+
+    .person-name {
+      margin: 0;
+      font-size: 1.45rem;
+      font-weight: 400;
+    }
+
+    .person-name a,
+    .advisor-affiliation a {
+      text-decoration: none;
+    }
+
+    .person-name a:hover {
+      color: var(--accent);
+    }
+
+    .advisor-card .person-name {
+      margin-bottom: 14px;
+      line-height: 1.2;
+    }
+
+    .advisor-affiliation,
+    .person-note {
+      color: var(--muted);
+      font-size: .98rem;
+      line-height: 1.65;
+    }
+
+    .advisor-affiliation {
+      margin: 0;
+    }
+
+    .person-note {
+      margin: 9px 0 0;
+    }
+
+    .people-subheading {
+      margin: 0 0 20px;
+      font-size: 1.45rem;
+      font-weight: 400;
+    }
+
+    .people-grid {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 16px;
+    }
+
+    .person-card {
+      min-width: 0;
+      padding: 20px 14px 18px;
+      border: 1px solid var(--line);
+      background: rgba(255, 255, 255, .22);
+      text-align: center;
+      transition: transform 180ms ease, border-color 180ms ease;
+    }
+
+    .person-card:hover {
+      transform: translateY(-3px);
+      border-color: rgba(151, 105, 77, .55);
+    }
+
+    .person-card .person-avatar {
+      --avatar-default-size: 78px;
+      margin-inline: auto;
+      margin-bottom: 12px;
+    }
+
+    .person-card .person-name {
+      font-size: 1.05rem;
+      line-height: 1.4;
+    }
+
+    .person-card .person-role {
+      margin-top: 7px;
+      font-size: .66rem;
+      letter-spacing: .1em;
+    }
+
+    .person-card .person-note {
+      font-size: .9rem;
+      line-height: 1.6;
+    }
+
+    .site-footer {
+      border-top: 1px solid var(--line);
+    }
+
+    .footer-inner {
+      min-height: 90px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 12px 24px;
+      padding-block: 22px;
+      color: var(--muted);
+      font-size: .88rem;
+    }
+
+    .footer-inner p {
+      margin: 0;
+    }
+
+    .black-hole-transition {
+      position: fixed;
+      z-index: 100;
+      left: 0;
+      top: 0;
+      width: 14px;
+      height: 14px;
+      margin: -7px 0 0 -7px;
+      border-radius: 50%;
+      pointer-events: none;
+      background: #14251f;
+      box-shadow:
+        0 0 0 2px rgba(151, 105, 77, .88),
+        0 0 0 7px rgba(151, 105, 77, .17);
+      animation: black-hole-bloom 540ms ease-in forwards;
+    }
+
+    @keyframes black-hole-bloom {
+      0% {
+        opacity: 0;
+        transform: scale(.4);
+      }
+      28% {
+        opacity: 1;
+        transform: scale(1);
+      }
+      100% {
+        opacity: 0;
+        transform: scale(.2);
+      }
+    }
+
+    @media (max-width: 760px) {
+      :root {
+        --site-header-height: 102px;
+      }
+
+      .header-inner {
+        min-height: auto;
+        align-items: flex-start;
+        flex-direction: column;
+        justify-content: center;
+        gap: 8px;
+        padding-block: 12px;
+      }
+
+      .nav {
+        width: 100%;
+        flex-wrap: nowrap;
+        justify-content: flex-start;
+        overflow-x: auto;
+        overscroll-behavior-x: contain;
+        scrollbar-width: thin;
+        scrollbar-color: rgba(151, 105, 77, .3) transparent;
+      }
+
+      .nav a {
+        flex: 0 0 auto;
+        min-height: 38px;
+        padding: 8px 12px;
+      }
+
+      .index-inner {
+        justify-content: flex-start;
+      }
+
+      .people-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+    }
+
+    @media (max-width: 650px) {
+      :root {
+        --section-index-height: 60px;
+        --page-gutter: 18px;
+      }
+
+      .container,
+      .reading-column {
+        width: min(calc(100% - 36px), var(--reading-width));
+      }
+
+      .nav {
+        gap: 4px;
+        font-size: .92rem;
+      }
+
+      .nav .language {
+        margin-left: 4px;
+        padding-left: 12px;
+      }
+
+      .index-inner {
+        width: calc(100% - 36px);
+        min-height: 60px;
+        gap: 6px;
+        padding-block: 8px;
+      }
+
+      .index-label {
+        margin-right: 4px;
+      }
+
+      .section-index a {
+        padding: 8px 11px;
+        font-size: .85rem;
+      }
+
+      .research-hero {
+        padding: 52px 0;
+      }
+
+      .research-section,
+      .people-section {
+        padding: 44px 0;
+      }
+
+      .section-body p {
+        font-size: 1.01rem;
+        line-height: 1.78;
+      }
+
+      .research-topic {
+        margin-top: 28px;
+        padding-top: 20px;
+      }
+
+      .research-figure {
+        width: min(
+          100%,
+          var(
+            --figure-mobile-width,
+            var(--figure-width, var(--research-photo-default-width))
+          )
+        );
+      }
+
+      .research-figure > figcaption {
+        font-size: .78rem;
+        line-height: 1.65;
+      }
+
+      .figure-pair {
+        width: 100%;
+        position: static;
+        left: auto;
+        transform: none;
+        grid-template-columns: minmax(0, 1fr);
+        gap: var(--figure-space);
+      }
+
+      .figure-pair > .research-figure {
+        width: min(
+          100%,
+          var(--figure-mobile-width, var(--figure-width, 100%))
+        );
+        max-width: 100%;
+        margin: 0 auto;
+      }
+
+      .person-avatar {
+        width: min(
+          100%,
+          var(
+            --avatar-mobile-size,
+            var(--avatar-size, var(--avatar-default-size))
+          )
+        );
+      }
+    }
+
+    @media (max-width: 480px) {
+      .advisor-card {
+        align-items: var(--advisor-mobile-align, flex-start);
+        gap: var(--advisor-mobile-gap, 16px);
+        padding: 19px;
+      }
+
+      .advisor-card .person-avatar {
+        --avatar-default-size: 82px;
+      }
+
+      .people-grid {
+        gap: 11px;
+      }
+
+      .person-card {
+        padding-inline: 9px;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      html {
+        scroll-behavior: auto;
+      }
+
+      .black-hole-transition {
+        animation: none;
+      }
+
+      a,
+      .nav a,
+      .section-index a,
+      .person-card {
+        transition: none;
+      }
+
+      .person-card:hover {
+        transform: none;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <!-- Moved outside the hero so the starfield covers the entire viewport. -->
+  <canvas class="starfield" aria-hidden="true"></canvas>
+
+  <a class="skip-link" href="#main-content">Skip to main content</a>
+
+  <header class="site-header">
+    <div class="header-inner container">
+      <a class="site-name" href="homepage_C.html">
+        Yehui Hou Near a Black Hole
+      </a>
+
+      <nav class="nav" aria-label="Main navigation">
+        <a href="homepage_E.html">Home</a>
+        <a href="research.html" aria-current="page">Research</a>
+        <a href="CV_English.pdf"
+           target="_blank"
+           rel="noopener noreferrer"
+           aria-label="View Chinese CV PDF (opens in a new tab)">CV</a>
+        <a href="https://inspirehep.net/authors/2052049?ui-citation-summary=true"
+           target="_blank"
+           rel="noopener noreferrer">Publications</a>
+        <a href="interest_C.html">Other</a>
+        <a class="language"
+           href="research.html"
+           lang="en"
+           hreflang="en">中文</a>
+      </nav>
+    </div>
+  </header>
+
+  <nav class="section-index" aria-label="Research areas">
+    <div class="index-inner">
+      <span class="index-label">Explore</span>
+      <a href="#black-hole-polarimetry">
+        <span>01</span>Black Hole Polarimetry
+      </a>
+      <a href="#spacetime-perturbations">
+        <span>02</span>Electromagnetic Signatures
+      </a>
+      <a href="#gw-optics">
+        <span>03</span>Strong Lensing of Gravitational Waves
+      </a>
+      <a href="#people">
+        <span>04</span>Mentor &amp; Collaborators
+      </a>
+    </div>
+  </nav>
+
+  <!-- The original navigation-height synchronization logic is unchanged. -->
+  <script>
+    (() => {
+      const root = document.documentElement;
+      const header = document.querySelector(".site-header");
+      const index = document.querySelector(".section-index");
+
+      if (!header || !index) return;
+
+      function updateNavigationHeight() {
+        root.style.setProperty(
+          "--site-header-height",
+          `${Math.ceil(header.getBoundingClientRect().height)}px`
+        );
+        root.style.setProperty(
+          "--section-index-height",
+          `${Math.ceil(index.getBoundingClientRect().height)}px`
+        );
+      }
+
+      updateNavigationHeight();
+
+      if ("ResizeObserver" in window) {
+        const observer = new ResizeObserver(updateNavigationHeight);
+        observer.observe(header);
+        observer.observe(index);
+      }
+
+      window.addEventListener("resize", updateNavigationHeight);
+      window.addEventListener("load", updateNavigationHeight);
+
+      if (document.fonts) {
+        document.fonts.ready.then(updateNavigationHeight);
+      }
+    })();
+  </script>
+
+  <main id="main-content" tabindex="-1">
+    <section class="research-hero" aria-labelledby="page-title">
+      <div class="reading-column">
+        <p class="eyebrow">Research</p>
+        <h1 id="page-title">Research</h1>
+        <p class="hero-description">
+          I study the propagation, interactions, and observable effects of
+          light and gravitational waves in the strong gravitational fields
+          of black holes. My recent work focuses on black hole polarimetry,
+          the effects of gravitational perturbations on light, and the
+          strong lensing and amplification of gravitational waves by
+          rotating black holes.
+        </p>
+      </div>
+    </section>
+
+    <section class="research-section"
+             id="black-hole-polarimetry"
+             aria-labelledby="polarimetry-heading">
+      <div class="reading-column">
+        <div class="section-heading">
+          <span class="section-number">01 / RESEARCH AREA</span>
+          <h2 id="polarimetry-heading">Black Hole Polarimetric Imaging</h2>
+        </div>
+
+        <div class="section-body">
+          <p>
+            Polarimetric imaging adds a crucial dimension to our understanding
+            of the environments around supermassive black holes. It carries
+            information about magnetic fields, emitting plasma, and the
+            spacetime geometry through which light travels. We study
+            polarization patterns near the event horizon and farther out
+            along relativistic jets, exploring how different physical
+            effects shape these patterns in each region.
+          </p>
+
+          <figure class="research-figure" style="--figure-width: 470px;">
+            <img src="black-hole-eht-2019.jpg"
+                 alt="Event Horizon Telescope image of M87*, providing observational context for black hole imaging"
+                 loading="lazy"
+                 decoding="async">
+            <figcaption>
+              The Event Horizon Telescope (EHT) image of M87*
+            </figcaption>
+          </figure>
+
+          <article class="research-topic" id="near-horizon-polarization">
+            <span class="topic-meta">A distinctive signature of rotating black holes</span>
+            <h3>Near-Horizon Polarization</h3>
+
+            <p>
+              Near the event horizon of a rotating black hole, magnetized
+              accretion flows exhibit a common pattern of motion. We showed
+              that, under the assumptions of our model, this behavior produces
+              a distinctive synchrotron polarization pattern, which we call
+              near-horizon polarization (NHP). The pattern is largely
+              insensitive to the details of the accretion flow, with its
+              structure determined by black hole spin and the observer's
+              viewing direction.
+            </p>
+
+            <p>
+              Testing this prediction will require future very-long-baseline
+              interferometry capable of resolving linear polarization in the
+              immediate vicinity of the event horizon. We are extending the
+              calculation beyond the leading-order near-horizon approximation
+              and exploring whether similar polarization patterns arise in
+              rotating spacetimes beyond Kerr.
+            </p>
+
+            <figure class="research-figure" style="--figure-width: 800px;">
+              <div class="image-area">
+                <img src="nhp.png"
+                     alt="Left: theoretical illustration of near-horizon polarization directions and reference contours. Right: predicted near-horizon polarization curves for different black hole spins and viewing angles."
+                     loading="lazy"
+                     decoding="async">
+              </div>
+              <figcaption>
+                Left: theoretical illustration of near-horizon polarization
+                directions and reference contours. Right: predicted
+                near-horizon polarization curves for different black hole
+                spins and viewing angles.
+              </figcaption>
+            </figure>
+
+            <p class="paper-links">
+              Related papers:
+              <a href="https://arxiv.org/pdf/2409.07248"
+                 target="_blank"
+                 rel="noopener noreferrer">arXiv:2409.07248</a>
+              <a href="https://arxiv.org/pdf/2606.19229"
+                 target="_blank"
+                 rel="noopener noreferrer">arXiv:2606.19229</a>
+            </p>
+          </article>
+
+          <article class="research-topic" id="jet-polarization">
+            <span class="topic-meta">From the central engine to the jet</span>
+            <h3>Jet Structure and Polarization</h3>
+
+            <p>
+              Black hole jets connect the physics of the central engine to
+              emission on much larger scales. Within a stationary,
+              axisymmetric framework of general-relativistic
+              magnetohydrodynamics, we developed semi-analytic jet models
+              and polarized imaging templates spanning multiple spatial
+              scales.
+            </p>
+
+            <p>
+              These models show how plasma inertia, magnetic-field winding,
+              jet collimation, and black hole spin shape the intensity and
+              polarization of emission across different regions of a jet.
+              They offer possible physical interpretations of future
+              polarization data. Applications to individual sources will
+              still require detailed consideration of their emission
+              mechanisms and observational conditions.
+            </p>
+
+            <figure class="research-figure" style="--figure-width: 800px;">
+              <div class="image-area">
+                <img src="jet.png"
+                     alt="Modeled jet emission intensity and polarization structure under different assumptions"
+                     loading="lazy"
+                     decoding="async">
+              </div>
+              <figcaption>
+                Left: intensity images and polarization structure from
+                GRMHD jet models. Right: variation of the jet polarization
+                angle with spatial scale for different model parameters.
+              </figcaption>
+            </figure>
+
+            <p class="paper-links">
+              Related papers:
+              <a href="https://arxiv.org/pdf/2507.23281"
+                 target="_blank"
+                 rel="noopener noreferrer">arXiv:2507.23281</a>
+              <a href="https://arxiv.org/pdf/2607.01820"
+                 target="_blank"
+                 rel="noopener noreferrer">arXiv:2607.01820</a>
+            </p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="research-section"
+             id="spacetime-perturbations"
+             aria-labelledby="perturbations-heading">
+      <div class="reading-column">
+        <div class="section-heading">
+          <span class="section-number">02 / RESEARCH AREA</span>
+          <h2 id="perturbations-heading">Electromagnetic Signatures of Gravitational Perturbations</h2>
+        </div>
+
+        <div class="section-body">
+          <p>
+            A passing gravitational perturbation can alter the trajectory
+            of a light ray and the transport of its polarization. We studied
+            a model in which light is emitted near a black hole during
+            ringdown. Analytic calculations and numerical simulations show
+            that spacetime perturbations can induce changes in the source's
+            apparent position and the observed polarization angle.
+          </p>
+
+          <p>
+            In principle, these variations could carry information about
+            the gravitational perturbations that produce them. Our work
+            also provides a framework for calculating light propagation in
+            perturbed spacetimes, with potential applications to other
+            systems, including extreme-mass-ratio inspirals. The
+            observability of these signals in specific systems remains
+            a subject for further study.
+          </p>
+
+          <figure class="research-figure" style="--figure-width: 800px;">
+            <img src="QNM.png"
+                 alt="Theoretical time evolution of the polarization angle of light affected by a gravitational perturbation"
+                 loading="lazy"
+                 decoding="async">
+            <figcaption>
+              Time evolution of the polarization angle light emitted
+              near a Kerr black hole perturbed by a fundamental
+              quasinormal mode.
+            </figcaption>
+          </figure>
+
+          <p class="paper-links">
+            Related paper:
+            <a href="https://arxiv.org/pdf/2605.11499"
+               target="_blank"
+               rel="noopener noreferrer">arXiv:2605.11499</a>
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <section class="research-section"
+             id="gw-optics"
+             aria-labelledby="gw-heading">
+      <div class="reading-column">
+        <div class="section-heading">
+          <span class="section-number">03 / RESEARCH AREA</span>
+          <h2 id="gw-heading">Strong Lensing of Gravitational Waves</h2>
+        </div>
+
+        <div class="section-body">
+          <p>
+            Like light, gravitational waves can be lensed by massive
+            objects. When their wavelengths are sufficiently short compared
+            with the relevant lensing scales, geometric optics provides
+            a way to study their propagation near black holes. Although
+            no gravitational-wave lensing event has been confirmed,
+            understanding the possible signal signatures is important
+            for future searches.
+          </p>
+
+          <figure class="research-figure" style="--figure-width: 510px;">
+            <img src="gw-optics-background-1.png"
+                 alt="Conceptual illustration of the geometry linking a gravitational-wave source, a black hole lens, and an observer"
+                 loading="lazy"
+                 decoding="async">
+            <figcaption>A conceptual illustration of gravitational-wave lensing geometry.</figcaption>
+          </figure>
+
+          <p>
+            Using Kerr black hole lensing theory and the geometry of
+            caustic surfaces in strong gravitational fields, we calculated
+            the time-domain structure of lensed signals. For a range of
+            source and observer configurations, the model predicts a
+            sequence of brief signal enhancements. Their arrival times
+            and the intervals between them depend on black hole spin
+            and the source–observer geometry.
+          </p>
+
+          <figure class="research-figure" style="--figure-width: 800px;">
+            <img src="gw-optics-2.png"
+                 alt="Theoretical illustration of Kerr black hole lensing geometry and caustic surfaces in strong gravitational fields"
+                 loading="lazy"
+                 decoding="async">
+            <figcaption>
+              Theoretical lensing geometry for a Kerr black hole, showing
+              the relationships between source position, viewing direction,
+              and strong-field structure.
+            </figcaption>
+          </figure>
+
+          <figure class="research-figure" style="--figure-width: 800px;">
+            <img src="gw-optics-3.png"
+                 alt="Predicted lensing time delays for different black hole spins and source–observer configurations"
+                 loading="lazy"
+                 decoding="async">
+            <figcaption>
+              Predicted lensing time delays for different black hole spins
+              and geometric configurations.
+            </figcaption>
+          </figure>
+
+          <p>
+            We are also investigating how gravitational Faraday rotation
+            affects the evolution of gravitational-wave polarization
+            during propagation through rotating spacetimes.
+          </p>
+
+          <p class="paper-links">
+            Related paper:
+            <a href="https://arxiv.org/pdf/2610.08399"
+               target="_blank"
+               rel="noopener noreferrer">arXiv:2610.08399</a>
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <section class="people-section"
+             id="people"
+             aria-labelledby="people-heading">
+      <div class="reading-column">
+        <div class="section-heading">
+          <span class="section-number">04 / MENTORS &amp; FRIENDS</span>
+          <h2 id="people-heading">Mentor &amp; Collaborators</h2>
+        </div>
+
+        <p class="people-intro">
+          More than research collaborators, they are valued mentors and friends.
+        </p>
+
+        <article class="advisor-card"
+                 style="
+                   --advisor-gap: 24px;
+                   --advisor-align: center;
+                   --advisor-mobile-gap: 16px;
+                   --advisor-mobile-align: flex-start;
+                 ">
+          <img class="person-avatar"
+               src="cb1.png"
+               alt="Portrait of Bin Chen"
+               loading="lazy"
+               decoding="async"
+               style="
+                 --avatar-size: 112px;
+                 --avatar-mobile-size: 82px;
+                 --avatar-focus: 50% 50%;
+               ">
+
+          <div>
+            <p class="person-role">PhD Advisor</p>
+
+            <h3 class="person-name">
+              <a href="https://ifpqt.nbu.edu.cn/info/1041/1161.htm"
+                 target="_blank"
+                 rel="noopener noreferrer">Bin Chen</a>, Professor
+            </h3>
+
+            <p class="advisor-affiliation">
+              Dean of the
+              <a href="https://ifpqt.nbu.edu.cn/"
+                 target="_blank"
+                 rel="noopener noreferrer">Institute of Fundamental Physics and Quantum Technology, Ningbo University</a>
+            </p>
+
+            <p class="person-note">
+              Professor Chen has guided me throughout my academic journey,
+              helping us grow through his thoughtful and candid advice.
+              His longstanding research focuses on string theory and <a
+                href="https://en.wikipedia.org/wiki/AdS/CFT_correspondence"
+                target="_blank"
+                rel="noopener noreferrer">holographic duality</a>.
+              In recent years, he has also turned his attention to
+              black hole astrophysics.
+            </p>
+          </div>
+        </article>
+
+        <h3 class="people-subheading">
+          Close Collaborators (Postdocs &amp; PhD Students)
+        </h3>
+
+        <div class="people-grid">
+          <article class="person-card">
+            <img class="person-avatar"
+                 src="zzy.jpg"
+                 alt="Portrait of Zhenyu Zhang"
+                 loading="lazy"
+                 decoding="async">
+            <h4 class="person-name">
+              <a href="https://zhenyuzhang98.github.io/"
+                 target="_blank"
+                 rel="noopener noreferrer">Zhenyu Zhang</a>
+            </h4>
+            <p class="person-role">
+              Postdoc ·
+              <a href="https://ifpqt.nbu.edu.cn/"
+                 target="_blank"
+                 rel="noopener noreferrer">NBU</a>
+            </p>
+            <p class="person-note">
+              Zhenyu is quick-thinking and generous with his ideas.
+              I treasure our shared explorations.
+            </p>
+          </article>
+
+          <article class="person-card">
+            <img class="person-avatar"
+                 src="zzl.jpg"
+                 alt="Portrait of Zelin Zhang"
+                 loading="lazy"
+                 decoding="async">
+            <h4 class="person-name">
+              <a href="https://ifpqt.nbu.edu.cn/info/1061/3082.htm"
+                 target="_blank"
+                 rel="noopener noreferrer">Zelin Zhang</a>
+            </h4>
+            <p class="person-role">
+              Postdoc ·
+              <a href="https://ifpqt.nbu.edu.cn/"
+                 target="_blank"
+                 rel="noopener noreferrer">NBU</a>
+            </p>
+            <p class="person-note">
+              Zelin brings deep expertise in AI for physics and a
+              thoughtful approach. Our exchanges inspire us both.
+            </p>
+          </article>
+
+          <article class="person-card">
+            <img class="person-avatar"
+                 src="wq.jpg"
+                 alt="Portrait of Qian Wan"
+                 loading="lazy"
+                 decoding="async">
+            <h4 class="person-name">
+              <a href="https://inspirehep.net/authors/2955095"
+                 target="_blank"
+                 rel="noopener noreferrer">Qian Wan</a>
+            </h4>
+            <p class="person-role">
+              Postdoc ·
+              <a href="https://www2.scut.edu.cn/physics/"
+                 target="_blank"
+                 rel="noopener noreferrer">SCUT</a>
+            </p>
+            <p class="person-note">
+              Qian showed exceptional research ability from his
+              earliest days in black hole physics.
+            </p>
+          </article>
+
+          <article class="person-card">
+            <img class="person-avatar"
+                 src="sy1.jpg"
+                 alt="Portrait of Yu Song"
+                 loading="lazy"
+                 decoding="async">
+            <h4 class="person-name">
+              <a href="https://inspirehep.net/authors/2810992?ui-citation-summary=true"
+                 target="_blank"
+                 rel="noopener noreferrer">Yu Song</a>
+            </h4>
+            <p class="person-role">
+              Postdoc ·
+              <a href="https://www.shao.ac.cn/"
+                 target="_blank"
+                 rel="noopener noreferrer">SHAO</a>
+            </p>
+            <p class="person-note">
+              Yu is calm and persistent. Together, we are advancing
+              our work on jet modeling.
+            </p>
+          </article>
+
+          <article class="person-card">
+            <img class="person-avatar"
+                 src="hjw.jpg"
+                 alt="Portrait of Jiewei Huang"
+                 loading="lazy"
+                 decoding="async">
+            <h4 class="person-name">
+              <a href="https://inspirehep.net/authors/2763306?ui-citation-summary=true"
+                 target="_blank"
+                 rel="noopener noreferrer">Jiewei Huang</a>
+            </h4>
+            <p class="person-role">
+              PhD Student ·
+              <a href="https://www.phy.pku.edu.cn/index.htm"
+                 target="_blank"
+                 rel="noopener noreferrer">PKU</a>
+            </p>
+            <p class="person-note">
+              Jiewei is an excellent collaborator, combining genuine
+              curiosity with strong computational skills.
+            </p>
+          </article>
+
+          <article class="person-card">
+            <img class="person-avatar"
+                 src="wyt.jpg"
+                 alt="Portrait of Yuting Wen"
+                 loading="lazy"
+                 decoding="async">
+            <h4 class="person-name">Yuting Wen</h4>
+            <p class="person-role">
+              PhD Student ·
+              <a href="https://www.phy.pku.edu.cn/index.htm"
+                 target="_blank"
+                 rel="noopener noreferrer">PKU</a>
+            </p>
+            <p class="person-note">
+              Yuting quickly grasps new fields, and his insights
+              often bring fresh perspectives to our discussions.
+            </p>
+          </article>
+
+          <article class="person-card">
+            <img class="person-avatar"
+                 src="xjz.jpg"
+                 alt="Portrait of Jingze Xia"
+                 loading="lazy"
+                 decoding="async">
+            <h4 class="person-name">
+              <a href="https://inspirehep.net/authors/3108643?ui-citation-summary=true"
+                 target="_blank"
+                 rel="noopener noreferrer">Jingze Xia</a>
+            </h4>
+            <p class="person-role">
+              PhD Student ·
+              <a href="https://tdli.sjtu.edu.cn/"
+                 target="_blank"
+                 rel="noopener noreferrer">TDLI</a>
+            </p>
+            <p class="person-note">
+              Jingze is highly motivated, with a strong foundation
+              in physics, and is tackling challenging research questions.
+            </p>
+          </article>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="footer-inner container">
+      <p>© Yehui Hou</p>
+      <p>Black holes · Polarimetric imaging · Gravitational waves</p>
+    </div>
+  </footer>
+
+  <script>
+    (() => {
+      "use strict";
+
+      const canvas = document.querySelector(".starfield");
+      if (!canvas) return;
+
+      const ctx = canvas.getContext("2d");
+      if (!ctx) return;
+
+      const motionPreference =
+        window.matchMedia("(prefers-reduced-motion: reduce)");
+
+      const tau = Math.PI * 2;
+      const stars = [];
+
+      let width = 0;
+      let height = 0;
+      let animationId = null;
+      let resizeId = null;
+
+      const starClusters = [
+        { x: .15, y: .28, spreadX: .18, spreadY: .28 },
+        { x: .79, y: .25, spreadX: .20, spreadY: .30 },
+        { x: .65, y: .80, spreadX: .24, spreadY: .22 }
+      ];
+
+      function randomNormal() {
+        const u = Math.max(Number.EPSILON, Math.random());
+        const v = Math.random        return Math.sqrt(-2 * Math.log(u)) * Math.cos(tau * v);
+      }
+
+      function createStar() {
+        let x = Math.random();
+        let y = Math.random();
+
+        if (Math.random() < .32) {
+          const cluster =
+            starClusters[Math.floor(Math.random() * starClusters.length)];
+
+          const candidateX =
+            cluster.x + randomNormal() * cluster.spreadX;
+          const candidateY =
+            cluster.y + randomNormal() * cluster.spreadY;
+
+          if (
+            candidateX >= 0 && candidateX <= 1 &&
+            candidateY >= 0 && candidateY <= 1
+          ) {
+            x = candidateX;
+            y = candidateY;
+          }
+        }
+
+        const bright = Math.random() < .13;
+
+        return {
+          x,
+          y,
+          radius: bright
+            ? .85 + Math.random() * .65
+            : .25 + Math.pow(Math.random(), 1.7) * .75,
+          baseAlpha: bright
+            ? .30 + Math.random() * .18
+            : .14 + Math.random() * .23,
+
+          breathAmount: .08 + Math.random() * .16,
+          breathPhase: Math.random() * tau,
+          breathPeriod: 4.5 + Math.random() * 8.5,
+
+          secondaryPhase: Math.random() * tau,
+          secondaryPeriod: 9 + Math.random() * 12,
+
+          twinklePhase: Math.random() * tau,
+          twinklePeriod: 1.5 + Math.random() * 3.5,
+          twinkleAmount: bright
+            ? .20 + Math.random() * .12
+            : .09 + Math.random() * .09,
+
+          bright,
+          color: Math.random() < .18
+            ? "151, 105, 77"
+            : "91, 109, 98"
+        };
+      }
+
+      function draw(now = performance.now()) {
+        const time = now / 1000;
+        const reducedMotion = motionPreference.matches;
+
+        ctx.clearRect(0, 0, width, height);
+
+        for (const star of stars) {
+          const breath = reducedMotion
+            ? 0
+            : Math.sin(
+                time * tau / star.breathPeriod + star.breathPhase
+              );
+
+          const secondary = reducedMotion
+            ? 0
+            : Math.sin(
+                time * tau / star.secondaryPeriod + star.secondaryPhase
+              );
+
+          const twinkle = reducedMotion
+            ? 0
+            : (
+                .75 * Math.sin(
+                  time * tau / star.twinklePeriod + star.twinklePhase
+                ) +
+                .25 * Math.sin(
+                  time * tau / (star.twinklePeriod * .61) +
+                  star.secondaryPhase
+                )
+              );
+
+          const alpha = Math.max(
+            .025,
+            Math.min(
+              .90,
+              star.baseAlpha +
+              breath * star.breathAmount +
+              secondary * .035 +
+              twinkle * star.twinkleAmount
+            )
+          );
+
+          const x = star.x * width;
+          const y = star.y * height;
+
+          if (star.bright) {
+            const glow = ctx.createRadialGradient(
+              x, y, 0,
+              x, y, star.radius * 3.8
+            );
+
+            glow.addColorStop(
+              0,
+              `rgba(${star.color}, ${alpha * .24})`
+            );
+            glow.addColorStop(1, `rgba(${star.color}, 0)`);
+
+            ctx.fillStyle = glow;
+            ctx.beginPath();
+            ctx.arc(x, y, star.radius * 3.8, 0, tau);
+            ctx.fill();
+          }
+
+          ctx.beginPath();
+          ctx.arc(x, y, star.radius, 0, tau);
+          ctx.fillStyle = `rgba(${star.color}, ${alpha})`;
+          ctx.fill();
+        }
+      }
+
+      function resize() {
+        const rect = canvas.getBoundingClientRect();
+        const ratio = Math.min(window.devicePixelRatio || 1, 2);
+
+        width = rect.width;
+        height = rect.height;
+
+        canvas.width = Math.max(1, Math.round(width * ratio));
+        canvas.height = Math.max(1, Math.round(height * ratio));
+
+        ctx.setTransform(ratio, 0, 0, ratio, 0, 0);
+
+        /* Update: reduce the star count by about one-third; all other star parameters are unchanged. */
+        const count = Math.min(
+          430,
+          Math.max(40, Math.floor(width * height / 4500))
+        );
+
+        while (stars.length < count) {
+          stars.push(createStar());
+        }
+
+        if (stars.length > count) {
+          stars.length = count;
+        }
+
+        draw();
+      }
+
+      function scheduleResize() {
+        if (resizeId !== null) return;
+
+        resizeId = requestAnimationFrame(() => {
+          resizeId = null;
+          resize();
+        });
+      }
+
+      function animate(now) {
+        animationId = null;
+
+        if (document.hidden || motionPreference.matches) return;
+
+        draw(now);
+        animationId = requestAnimationFrame(animate);
+      }
+
+      function updateAnimation() {
+        if (animationId !== null) {
+          cancelAnimationFrame(animationId);
+          animationId = null;
+        }
+
+        if (document.hidden) return;
+
+        draw();
+
+        if (!motionPreference.matches) {
+          animationId = requestAnimationFrame(animate);
+        }
+      }
+
+      resize();
+      updateAnimation();
+
+      window.addEventListener("resize", scheduleResize);
+      document.addEventListener("visibilitychange", updateAnimation);
+
+      window.addEventListener("pagehide", () => {
+        if (animationId !== null) {
+          cancelAnimationFrame(animationId);
+          animationId = null;
+        }
+      });
+
+      window.addEventListener("pageshow", () => {
+        scheduleResize();
+        updateAnimation();
+      });
+
+      if ("ResizeObserver" in window) {
+        const observer = new ResizeObserver(scheduleResize);
+        observer.observe(canvas);
+      }
+
+      if (motionPreference.addEventListener) {
+        motionPreference.addEventListener("change", updateAnimation);
+      } else if (motionPreference.addListener) {
+        motionPreference.addListener(updateAnimation);
+      }
+    })();
+  </script>
+</body>
+</html>
